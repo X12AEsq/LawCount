@@ -24,7 +24,7 @@ struct LawCountApp: App {
         }
     }()
 */
-    @State private var cvm:CVM = CVM()
+    @ObservedObject var cvm:CVM = CVM()
     
     var body: some Scene {
         WindowGroup {

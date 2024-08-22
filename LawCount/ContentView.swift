@@ -9,18 +9,38 @@ import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    @Environment(CVM.self) private var cvm
+    @EnvironmentObject var cvm:CVM
+    @ObservedObject var router = Router<Path>()
     var body: some View {
-        LawCountView()
-            .onAppear(perform: {
-                let journalResult = loadInput()
-                if journalResult.status == 0 {
-                    let journalExtracts = processJournal(rawJournal: journalResult.journal)
-                    cvm.cvmTransactions = buildJournal(xtrs: journalExtracts)
-                }
-                cvm.cvmCOA = buildChartofAccounts()
-                print("xxx")
-            })
+        VStack {
+            Text("Initializing")
+//                .onAppear(perform: {
+//                    let journalResult = loadInput()
+//                    if journalResult.status == 0 {
+//                        let journalExtracts = processJournal(rawJournal: journalResult.journal)
+//                        cvm.cvmTransactions = buildJournal(xtrs: journalExtracts)
+//                    }
+//                    cvm.cvmCOA = buildChartofAccounts()
+//                    print("xxx")
+//                    router.push(.Startup)
+//                })
+//            Button("Startup") {
+//                router.push(.Startup)
+//            }
+
+            NavigationStack(path: $router.paths) {
+                LawCountView()
+                    .navigationDestination(for: Path.self) { path in
+                        switch path {
+                        case .HoldingPattern:
+                            ContentView()
+                        case .Startup:
+                            LawCountView()
+                        }
+                    }
+            }
+            .environmentObject(router)
+        }
     }
     
     func loadInput() -> (status:Int, journal: [String]) {

@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable
-class CVM {
+class CVM: ObservableObject {
     var cvmTransactions:[IJTrans] = []
     var cvmCOA:ICAChartOfAccounts = ICAChartOfAccounts()
 //    var lastAccountNumber:ConvAcctNumber = ConvAcctNumber()

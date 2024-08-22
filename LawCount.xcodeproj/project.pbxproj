@@ -23,6 +23,7 @@
 		31E7977B2C761FAF00B5A8B8 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 31E7977A2C761FAF00B5A8B8 /* Preview Assets.xcassets */; };
 		31E797852C7621F000B5A8B8 /* JSAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E797842C7621F000B5A8B8 /* JSAccount.swift */; };
 		31E797872C76225200B5A8B8 /* AccountNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31E797862C76225200B5A8B8 /* AccountNumber.swift */; };
+		31EEA75F2C77C8F1003BCBFA /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31EEA75E2C77C8F1003BCBFA /* Router.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		31E7977A2C761FAF00B5A8B8 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		31E797842C7621F000B5A8B8 /* JSAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSAccount.swift; sourceTree = "<group>"; };
 		31E797862C76225200B5A8B8 /* AccountNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountNumber.swift; sourceTree = "<group>"; };
+		31EEA75E2C77C8F1003BCBFA /* Router.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 		31E7976F2C761FAE00B5A8B8 /* LawCount */ = {
 			isa = PBXGroup;
 			children = (
+				31EEA7602C77CD56003BCBFA /* Views */,
 				31D3711B2C7653E50090D6FB /* InputData */,
 				31E797812C7620F900B5A8B8 /* Models */,
 				31E797702C761FAE00B5A8B8 /* LawCountApp.swift */,
@@ -92,7 +95,6 @@
 				31E797762C761FAF00B5A8B8 /* Assets.xcassets */,
 				31E797782C761FAF00B5A8B8 /* LawCount.entitlements */,
 				31E797792C761FAF00B5A8B8 /* Preview Content */,
-				31A8F4CB2C77A59C00E14894 /* LawCountView.swift */,
 			);
 			path = LawCount;
 			sourceTree = "<group>";
@@ -111,6 +113,7 @@
 				3158E2112C767713008027FB /* InterimJournalTransaction.swift */,
 				31D371242C765B100090D6FB /* InterimJournalExtract.swift */,
 				31A8F4C92C77970B00E14894 /* InterimChartofAccounts.swift */,
+				31EEA75E2C77C8F1003BCBFA /* Router.swift */,
 				31D371202C76590C0090D6FB /* Money.swift */,
 				31D371262C765B410090D6FB /* ConvAcctNumber.swift */,
 				31D371222C7659130090D6FB /* ExtDate.swift */,
@@ -119,6 +122,14 @@
 				31D3711E2C7654610090D6FB /* CVM.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		31EEA7602C77CD56003BCBFA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				31A8F4CB2C77A59C00E14894 /* LawCountView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -202,6 +213,7 @@
 				31D3711F2C7654610090D6FB /* CVM.swift in Sources */,
 				31D371272C765B410090D6FB /* ConvAcctNumber.swift in Sources */,
 				31E797752C761FAE00B5A8B8 /* Item.swift in Sources */,
+				31EEA75F2C77C8F1003BCBFA /* Router.swift in Sources */,
 				31E797712C761FAE00B5A8B8 /* LawCountApp.swift in Sources */,
 				31E797872C76225200B5A8B8 /* AccountNumber.swift in Sources */,
 				31D371232C7659130090D6FB /* ExtDate.swift in Sources */,
