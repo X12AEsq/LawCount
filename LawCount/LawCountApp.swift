@@ -10,6 +10,7 @@ import SwiftData
 
 @main
 struct LawCountApp: App {
+/*
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Item.self,
@@ -22,11 +23,14 @@ struct LawCountApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-
+*/
+    @State private var cvm:CVM = CVM()
+    
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .environment(cvm)
         }
-        .modelContainer(sharedModelContainer)
+//        .modelContainer(sharedModelContainer)
     }
 }
