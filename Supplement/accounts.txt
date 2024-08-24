@@ -1,0 +1,200 @@
+
+coaGroup.ICAGGroupNr = 1000
+coaGroup.ICAGGroupName = "Assets"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1100
+coaAccount.ICAAAccountName = "Cash in Bank"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1109
+coaAccount.ICAAAccountName = "Petty Cash"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1120
+coaAccount.ICAAAccountName = "Client Advances-Unbilled"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1130
+coaAccount.ICAAAccountName = "Client Advances-Billed"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1140
+coaAccount.ICAAAccountName = "Other Receivables Deposits etc."
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1150
+coaAccount.ICAAAccountName = "Furniture Fixtures & Equipment"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1160
+coaAccount.ICAAAccountName = "Leasehold Improvements"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1170
+coaAccount.ICAAAccountName = "Real Property"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1180
+coaAccount.ICAAAccountName = "Reserve: Depreciation & Amortization"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1190
+coaAccount.ICAAAccountName = "Other Assets"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1198
+coaAccount.ICAAAccountName = "Client Billings"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 1199
+coaAccount.ICAAAccountName = "Lawyer Billings"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 2000
+coaGroup.ICAGGroupName = "Liabilities"
+coaAccount.ICAAAccountNr = 2200
+coaAccount.ICAAAccountName = "Accounts Payable"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 2210
+coaAccount.ICAAAccountName = "Federal Income Tax Withheld"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 2211
+coaAccount.ICAAAccountName = "State Income Tax Withheld"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 2212
+coaAccount.ICAAAccountName = "Employee FICA Tax Withheld"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 2220
+coaAccount.ICAAAccountName = "Employee Medical/RetirementWithheld"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 3000
+coaGroup.ICAGGroupName = "Segregated Liabilities"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 3298
+coaAccount.ICAAAccountName = "Client Trust Funds"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 3299
+coaAccount.ICAAAccountName = "Liability: Client Trust Funds"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 4000
+coaGroup.ICAGGroupName = "Owners Equity"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 4300
+coaAccount.ICAAAccountName = "Equity Account: Owner #1 (et al.)"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 4301
+coaAccount.ICAAAccountName = "Drawing Account: Owner #1 (et al.)"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 5000
+coaGroup.ICAGGroupName = "Profit/Loss Accounts"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 5400
+coaAccount.ICAAAccountName = "Fees: Income from Clients"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 5460
+coaAccount.ICAAAccountName = "Other Income/Receipts"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 5480
+coaAccount.ICAAAccountName = "Costs: Income-Producing Property"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 6000
+coaAccount.ICAAAccountName = "Compensation Costs"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6500
+coaAccount.ICAAAccountName = "Secretarial"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6501
+coaAccount.ICAAAccountName = "Word Processing"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6502
+coaAccount.ICAAAccountName = "Paralegals/Clerks"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6503
+coaAccount.ICAAAccountName = "Lawyers"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6504
+coaAccount.ICAAAccountName = "Other Non-Owner Employees"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6510
+coaAccount.ICAAAccountName = "FICA & Unemployment Taxes"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6514
+coaAccount.ICAAAccountName = "Employee Retirement Benefits"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6518
+coaAccount.ICAAAccountName = "Employee Training & Education"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6519
+coaAccount.ICAAAccountName = "Other Employee Costs Occupancy"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6520
+coaAccount.ICAAAccountName = "Office Rent"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6521
+coaAccount.ICAAAccountName = "Parking"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6523
+coaAccount.ICAAAccountName = "Real Estate Taxes & Insurance"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6525
+coaAccount.ICAAAccountName = "Utilities Other Than Telephone"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6527
+coaAccount.ICAAAccountName = "Cleaning/Housekeeping — Office"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6530
+coaAccount.ICAAAccountName = "Depreciation/Amortization — Office"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 6531
+coaAccount.ICAAAccountName = "Maintenance & Repairs -- Office"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 7000
+coaGroup.ICAGGroupName = "Office Operations"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7540
+coaAccount.ICAAAccountName = "Supplies Stationery & Printing"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7541
+coaAccount.ICAAAccountName = "Postage & Delivery"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7542
+coaAccount.ICAAAccountName = "Library & Subscriptions"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7543
+coaAccount.ICAAAccountName = "Telephone/Communications"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7545
+coaAccount.ICAAAccountName = "Photocopy Expense"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7546
+coaAccount.ICAAAccountName = "Computer Equipment"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7548
+coaAccount.ICAAAccountName = "Equipment Rental"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7550
+coaAccount.ICAAAccountName = "Depreciation: Furniture Fixtures & Equipment"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 7551
+coaAccount.ICAAAccountName = "Other Maintenance Repairs"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 8000
+coaGroup.ICAGGroupName = "Professional/Promotion"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 8570
+coaAccount.ICAAAccountName = "Travel & Related Expense"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 8571
+coaAccount.ICAAAccountName = "Professional Dues & CLE"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 8572
+coaAccount.ICAAAccountName = "Recruiting: Professional Staff"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 8573
+coaAccount.ICAAAccountName = "Entertainment"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 8574
+coaAccount.ICAAAccountName = "Promotion & Advertising"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaGroup.ICAGGroupNr = 9000
+coaGroup.ICAGGroupName = "Other Costs/Expenses"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 9580
+coaAccount.ICAAAccountName = "Insurance: Professional/Other"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 9581
+coaAccount.ICAAAccountName = "Other Taxes and Similar Costs"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 9582
+coaAccount.ICAAAccountName = "Client Advances Written Off"
+coaGroup.ICAGAccounts.append(coaAccount)
+coaAccount.ICAAAccountNr = 9590
+coaAccount.ICAAAccountName = "Miscellaneous Expenses"

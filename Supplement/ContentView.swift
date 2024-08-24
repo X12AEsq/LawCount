@@ -1,102 +1,67 @@
 //
-//  CVM.swift
+//  ContentView.swift
 //  LawCount
 //
 //  Created by Morris Albers on 8/21/24.
 //
 
-import Foundation
 import SwiftUI
 import SwiftData
 
-//@Observable
-class CVM: ObservableObject {
-    var cvmSelection:Int = 0
-    var cvmTransactions:[IJTrans] = []
-    var cvmCOA:ICAChartOfAccounts = ICAChartOfAccounts()
-    var cvmTransactionCount:Int = 0
-    var cvmAccountCount:Int = 0
-    
-    init(cvmTransactions: [IJTrans], cvmCOA: ICAChartOfAccounts) {
-        self.cvmTransactions = cvmTransactions
-        self.cvmCOA = cvmCOA
-        self.cvmTransactionCount = self.cvmTransactions.count
-        self.cvmAccountCount = self.accountCount()
-    }
-    
-    init() {
-        self.cvmTransactions = []
-        self.cvmCOA = ICAChartOfAccounts()
-        self.cvmTransactionCount = self.cvmTransactions.count
-        self.cvmAccountCount = self.accountCount()
-    }
-    
-    func accountCount() -> Int {
-        var count:Int = 0
-        for ICAG in cvmCOA.ICAGroups {
-            count += ICAG.ICAGAccounts.count
-        }
-        return count
-    }
-    
-    func selectedPractice() -> String {
-            return "Morris E. Albers II, Attorney and Counsellor at Law, PLLC"
-    }
-    
-    func readJSON() {
-        let decoder = JSONDecoder()
-        
-        do {
-            let url = URL.documentsDirectory.appending(path: "COA.json")
-            let input = try Data(contentsOf: url)
-            self.cvmCOA = try decoder.decode(ICAChartOfAccounts.self, from: input)
-            print("xxx")
-            //                    var coadata = try decoder.decode(cvm.cvmCOA)
-        } catch {
-            print(error.localizedDescription)
-        }
-        self.cvmAccountCount = self.accountCount()
-        
-        do {
-            let url = URL.documentsDirectory.appending(path: "Transactions.json")
-            let input = try Data(contentsOf: url)
-            self.cvmTransactions = try decoder.decode([IJTrans].self, from: input)
-            print("xxx")
-            //                    var coadata = try decoder.decode(cvm.cvmCOA)
-        } catch {
-            print(error.localizedDescription)
-        }
-        self.cvmTransactionCount = self.cvmTransactions.count
-    }
-    
-    func writeJSON() {
-        let encoder = JSONEncoder()
-        encoder.outputFormatting = .prettyPrinted
+struct ContentView: View {
+    @EnvironmentObject var cvm:CVM
+//    @ObservedObject var router = Router<Path>()
+    @State private var showingDocuments = false
+    @State private var showingListTransactions = false
 
-        do {
-            let url = URL.documentsDirectory.appending(path: "COA.json")
-            let data = try encoder.encode(self.cvmCOA)
-            try data.write(to: url, options: [.atomic, .completeFileProtection])
-        } catch {
-            print(error.localizedDescription)
-        }
-        
-        do {
-            let url = URL.documentsDirectory.appending(path: "Transactions.json")
-            let data = try encoder.encode(self.cvmTransactions)
-            try data.write(to: url, options: [.atomic, .completeFileProtection])
-        } catch {
-            print(error.localizedDescription)
+    var body: some View {
+        VStack {
+            Button("Documents") {
+                showingDocuments = true
+                showingListTransactions = false
+            }
+            .sheet(isPresented: $showingDocuments) {
+                DocumentsView()
+            }
+            Button("Transactions") {
+                showingDocuments = false
+                showingListTransactions = true
+            }
+            .sheet(isPresented: $showingListTransactions) {
+                ListTransactionsView()
+            }
+//            Text("Initializing")
+//                .onAppear(perform: {
+//                    let journalResult = loadInput()
+//                    if journalResult.status == 0 {
+//                        let journalExtracts = processJournal(rawJournal: journalResult.journal)
+//                        cvm.cvmTransactions = buildJournal(xtrs: journalExtracts)
+//                    }
+//                    cvm.cvmCOA = buildChartofAccounts()
+//                    print("xxx")
+//                    router.push(.Startup)
+//                })
+//            Button("Startup") {
+//                router.push(.Startup)
+//            }
+//            LawCountView()
         }
     }
     
-    func convertTransactions() {
-        let inputJournal = loadInput()
-        if inputJournal.status == 0 {
-            print("success")
-            let processedJournal = processJournal(rawJournal: inputJournal.journal)
-            print(processedJournal.count)
-            _ = buildJournal(xtrs: processedJournal)
+    func loadInput() -> (status:Int, journal: [String]) {
+        if let filepath = Bundle.main.path(forResource: "Journal", ofType: "txt") {
+            do {
+                let contents = try String(contentsOfFile: filepath)
+                let rawJournal:[String] = contents.components(separatedBy: "\n")
+//                print(contents)
+                return (0, rawJournal)
+            } catch {
+                // contents could not be loaded
+                return (-1, [])
+            }
+        } else {
+            // example.txt not found!
+            return (-2, [])
         }
     }
     
@@ -145,24 +110,7 @@ class CVM: ObservableObject {
         }
         return workJournal
     }
-
-    func loadInput() -> (status:Int, journal: [String]) {
-        if let filepath = Bundle.main.path(forResource: "Journal", ofType: "txt") {
-            do {
-                let contents = try String(contentsOfFile: filepath)
-                let rawJournal:[String] = contents.components(separatedBy: "\n")
-//                print(contents)
-                return (0, rawJournal)
-            } catch {
-                // contents could not be loaded
-                return (-1, [])
-            }
-        } else {
-            // example.txt not found!
-            return (-2, [])
-        }
-    }
-
+    
     func buildJournal(xtrs: [IJXtract]) -> [IJTrans] {
         var workXtracts: [IJXtract] = xtrs
         var workTrans: [IJTrans] = []
@@ -174,14 +122,14 @@ class CVM: ObservableObject {
             thisTrans.IJTType = workXtracts[0].ijxType
             thisTrans.IJTNum = workXtracts[0].ijxNum
             thisTrans.IJTName = workXtracts[0].ijxName
-            let workSources = workXtracts.filter( { $0.ijxSeqNr == currTrans } )
+            var workSources = workXtracts.filter( { $0.ijxSeqNr == currTrans } )
             workXtracts = workXtracts.filter( { $0.ijxSeqNr != currTrans } )
             for ws in workSources {
                 let wx:IJTrans.IJTSegment = IJTrans.IJTSegment(IJTSAccountNr: ws.ijxAccountNr, IJTSAccountName: ws.ijxAccountName, IJTSDebit: ws.ijxDebit, IJTSCredit: ws.ijxCredit)
                 thisTrans.IJTSegments.append(wx)
             }
             workTrans.append(thisTrans)
-//            print(workXtracts.count)
+            print(workXtracts.count)
         }
         return workTrans
     }
@@ -387,6 +335,82 @@ class CVM: ObservableObject {
         coaGroup = ICAGroup()
         return coa
     }
+/*
+    @Environment(\.modelContext) private var modelContext
+    @Query private var items: [Item]
 
+    var body: some View {
+        NavigationSplitView {
+            List {
+                ForEach(items) { item in
+                    NavigationLink {
+                        Text("Item at \(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))")
+                    } label: {
+                        Text(item.timestamp, format: Date.FormatStyle(date: .numeric, time: .standard))
+                    }
+                }
+                .onDelete(perform: deleteItems)
+            }
+#if os(macOS)
+            .navigationSplitViewColumnWidth(min: 180, ideal: 200)
+#endif
+            .toolbar {
+#if os(iOS)
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                }
+#endif
+                ToolbarItem {
+                    Button(action: addItem) {
+                        Label("Add Item", systemImage: "plus")
+                    }
+                }
+            }
+        } detail: {
+            Text("Select an item")
+        }
+    }
+
+    private func addItem() {
+        withAnimation {
+            let newItem = Item(timestamp: Date())
+            modelContext.insert(newItem)
+        }
+    }
+
+    private func deleteItems(offsets: IndexSet) {
+        withAnimation {
+            for index in offsets {
+                modelContext.delete(items[index])
+            }
+        }
+    }
+}
+
+#Preview {
+    ContentView()
+        .modelContainer(for: Item.self, inMemory: true)
+*/
+    
+    
+/*
+ Dictionaries
+ 
+ var heights = [String: Int]()
+ heights["Yao Ming"] = 229
+ heights["Shaquille O'Neal"] = 216
+ heights["LeBron James"] = 206
+ 
+ var archEnemies = [String: String]()
+ archEnemies["Batman"] = "The Joker"
+ archEnemies["Superman"] = "Lex Luthor"
+ 
+ var heights = [String: Int]()
+ heights["Yao Ming"] = 229
+ heights["Shaquille O'Neal"] = 216
+ heights["LeBron James"] = 206
+ 
+ archEnemies["Batman"] = "Penguin"
+ */
 }
 

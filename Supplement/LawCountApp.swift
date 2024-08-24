@@ -24,12 +24,12 @@ struct LawCountApp: App {
         }
     }()
 */
-    @StateObject var cvmInstance = CVM()
+    @StateObject var cvm:CVM = CVM()
     
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .environmentObject(cvmInstance)
+                .environmentObject(cvm)
         }
 //        .modelContainer(sharedModelContainer)
     }

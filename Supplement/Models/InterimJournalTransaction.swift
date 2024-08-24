@@ -6,17 +6,7 @@
 //
 
 import Foundation
-import SwiftData
-
-struct IJTrans: Codable, Hashable {
-    static func == (lhs: IJTrans, rhs: IJTrans) -> Bool {
-        return lhs.IJTSeqNr == rhs.IJTSeqNr
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        hasher.combine(IJTSeqNr)
-    }
-    
+struct IJTrans: Codable {
     struct IJTSegment: Codable {
         var IJTSAccountNr:Int = 0
         var IJTSAccountName = ""
@@ -44,18 +34,5 @@ struct IJTrans: Codable, Hashable {
     var IJTNum:String = ""
     var IJTName:String = ""
     var IJTSegments:[IJTSegment] = []
-    
-    @Transient var shortPrintLine:String {
-        var pl:String = FormattingService.rjf(base: String(IJTSeqNr), len: 5, zeroFill: true)
-        pl += " "
-        pl += FormattingService.ljf(base: IJTDate.exdFormatted, len: 11)
-        pl += " "
-        pl += FormattingService.ljf(base: IJTType, len: 20)
-        pl += " "
-        pl += FormattingService.ljf(base: IJTNum, len: 15)
-        pl += " "
-        pl += FormattingService.ljf(base: IJTName, len: 25)
-        return pl
-    }
 
 }
