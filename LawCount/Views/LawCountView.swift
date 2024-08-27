@@ -18,7 +18,7 @@ struct LawCountView: View {
         HStack(alignment:.top) {
             Spacer()
             VStack(alignment: .leading) {
-                Text(selectedPractice())
+                Text(cvmInstance.moduleTitle(mod: "Law Accounting"))
                     .font(.system(size: 20))
                     .padding(.leading, 20)
                     .padding(.bottom, 20)
@@ -77,11 +77,6 @@ struct LawCountView: View {
             }
         }
     }
-    
-    func selectedPractice() -> String {
-            return "Morris E. Albers II, Attorney and Counsellor at Law, PLLC"
-    }
-
 }
 
 //#Preview {

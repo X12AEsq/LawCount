@@ -17,6 +17,11 @@ class CVM: ObservableObject {
     var cvmTransactionCount:Int = 0
     var cvmAccountCount:Int = 0
     
+    var cvmNewTrans:[NewAccountTransaction] = []
+    var cvmNewSegments:[NewTransactionSegment] = []
+    var cvmNewGroup:[NewAccountGroup] = []
+    var cvmNewAccount:[NewAccountRecord] = []
+    
     init(cvmTransactions: [IJTrans], cvmCOA: ICAChartOfAccounts) {
         self.cvmTransactions = cvmTransactions
         self.cvmCOA = cvmCOA
@@ -41,6 +46,29 @@ class CVM: ObservableObject {
     
     func selectedPractice() -> String {
             return "Morris E. Albers II, Attorney and Counsellor at Law, PLLC"
+    }
+    
+    func moduleTitle(mod:String) -> String {
+        return selectedPractice() + " " + mod
+    }
+    
+    func retrieveAccount(acctNr: Int) -> (status:Int, acct:ICAAccount, acctName:String) {
+        var tempAccounts:[ICAAccount] = [ICAAccount]()
+        for i in 0 ... self.cvmCOA.ICAGroups.count - 1 {
+            for j in 0 ... self.cvmCOA.ICAGroups[i].ICAGAccounts.count - 1 {
+                if self.cvmCOA.ICAGroups[i].ICAGAccounts[j].ICAAAccountNr == acctNr {
+                    tempAccounts.append(self.cvmCOA.ICAGroups[i].ICAGAccounts[j])
+                }
+            }
+        }
+        switch tempAccounts.count {
+        case 0:
+            return(-2, ICAAccount(), "None found")
+        case 1:
+            return(0, tempAccounts[0], tempAccounts[0].ICAAAccountName)
+        default:
+            return(-3, ICAAccount(), "Multiples found")
+        }
     }
     
     func readJSON() {
@@ -90,14 +118,93 @@ class CVM: ObservableObject {
         }
     }
     
+    func writeNewJSON() {
+        let encoder = JSONEncoder()
+        encoder.outputFormatting = .prettyPrinted
+
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewGroups.json")
+            let data = try encoder.encode(self.cvmNewGroup)
+            try data.write(to: url, options: [.atomic, .completeFileProtection])
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewAccounts.json")
+            let data = try encoder.encode(self.cvmNewAccount)
+            try data.write(to: url, options: [.atomic, .completeFileProtection])
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewTrans.json")
+            let data = try encoder.encode(self.cvmNewTrans)
+            try data.write(to: url, options: [.atomic, .completeFileProtection])
+        } catch {
+            print(error.localizedDescription)
+        }
+
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewSegments.json")
+            let data = try encoder.encode(self.cvmNewSegments)
+            try data.write(to: url, options: [.atomic, .completeFileProtection])
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    
+    func readNewJSON() {
+        let decoder = JSONDecoder()
+        
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewGroups.json")
+            let input = try Data(contentsOf: url)
+            self.cvmNewGroup = try decoder.decode([NewAccountGroup].self, from: input)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewAccounts.json")
+            let input = try Data(contentsOf: url)
+            self.cvmNewAccount = try decoder.decode([NewAccountRecord].self, from: input)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewTrans.json")
+            let input = try Data(contentsOf: url)
+            self.cvmNewTrans = try decoder.decode([NewAccountTransaction].self, from: input)
+        } catch {
+            print(error.localizedDescription)
+        }
+        
+        do {
+            let url = URL.documentsDirectory.appending(path: "NewSegments.json")
+            let input = try Data(contentsOf: url)
+            self.cvmNewSegments = try decoder.decode([NewTransactionSegment].self, from: input)
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+
     func convertTransactions() {
         let inputJournal = loadInput()
         if inputJournal.status == 0 {
             print("success")
             let processedJournal = processJournal(rawJournal: inputJournal.journal)
             print(processedJournal.count)
-            _ = buildJournal(xtrs: processedJournal)
+            self.cvmTransactions = buildJournal(xtrs: processedJournal)
+            print("done")
         }
+    }
+    
+    func convertAccounts() {
+        self.cvmCOA = buildChartofAccounts()
+        self.cvmAccountCount = self.accountCount()
     }
     
     func processJournal(rawJournal:[String]) -> [IJXtract] {
@@ -166,6 +273,10 @@ class CVM: ObservableObject {
     func buildJournal(xtrs: [IJXtract]) -> [IJTrans] {
         var workXtracts: [IJXtract] = xtrs
         var workTrans: [IJTrans] = []
+        
+        cvmNewTrans = []
+        cvmNewSegments = []
+        
         while workXtracts.count > 0 {
             let currTrans:Int = workXtracts[0].ijxSeqNr
             var thisTrans:IJTrans = IJTrans()
@@ -175,14 +286,26 @@ class CVM: ObservableObject {
             thisTrans.IJTNum = workXtracts[0].ijxNum
             thisTrans.IJTName = workXtracts[0].ijxName
             let workSources = workXtracts.filter( { $0.ijxSeqNr == currTrans } )
-            workXtracts = workXtracts.filter( { $0.ijxSeqNr != currTrans } )
+            
+            let newTransaction = NewAccountTransaction(NTSSeqNr: workXtracts[0].ijxSeqNr, NTSProcessed: false, NTSDate: workXtracts[0].ijxDate, NTSType: workXtracts[0].ijxType, NTSNum: workXtracts[0].ijxNum, NTSName: workXtracts[0].ijxName)
+            cvmNewTrans.append(newTransaction)
+            
+            workXtracts = workXtracts.filter( { $0.ijxSeqNr != currTrans } ) // cut out extract set
+            var segSeq:Int = 0
+            
             for ws in workSources {
                 let wx:IJTrans.IJTSegment = IJTrans.IJTSegment(IJTSAccountNr: ws.ijxAccountNr, IJTSAccountName: ws.ijxAccountName, IJTSDebit: ws.ijxDebit, IJTSCredit: ws.ijxCredit)
                 thisTrans.IJTSegments.append(wx)
+                
+                segSeq += 1
+                let NewSegment:NewTransactionSegment = NewTransactionSegment(NTSParentTransaction: newTransaction.NTSSeqNr, NTSSeqNr: segSeq, NTSAccountNr: ws.ijxAccountNr, NTSAccountName: ws.ijxAccountName, NTSDebit: ws.ijxDebit, NTSCredit: ws.ijxCredit)
+                cvmNewSegments.append(NewSegment)
             }
             workTrans.append(thisTrans)
-//            print(workXtracts.count)
+            print(workXtracts.count)
         }
+        buildNewChartofAccounts()
+        writeNewJSON()
         return workTrans
     }
     
@@ -192,7 +315,7 @@ class CVM: ObservableObject {
         var coaAccount:ICAAccount = ICAAccount()
         coaGroup.ICAGGroupNr = 1000
         coaGroup.ICAGGroupName = "Assets"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 1100
         coaAccount.ICAAAccountName = "Cash in Bank"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -252,7 +375,7 @@ class CVM: ObservableObject {
         coaGroup = ICAGroup()
         coaGroup.ICAGGroupNr = 3000
         coaGroup.ICAGGroupName = "Segregated Liabilities"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 3298
         coaAccount.ICAAAccountName = "Client Trust Funds"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -263,18 +386,30 @@ class CVM: ObservableObject {
         coaGroup = ICAGroup()
         coaGroup.ICAGGroupNr = 4000
         coaGroup.ICAGGroupName = "Owners Equity"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 4300
         coaAccount.ICAAAccountName = "Equity Account: Morris"
         coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 4301
         coaAccount.ICAAAccountName = "Drawing Account: Morris"
         coaGroup.ICAGAccounts.append(coaAccount)
+        coaAccount.ICAAAccountNr = 4310
+        coaAccount.ICAAAccountName = "Equity Account: Linda"
+        coaGroup.ICAGAccounts.append(coaAccount)
+        coaAccount.ICAAAccountNr = 4311
+        coaAccount.ICAAAccountName = "Drawing Account: Linda"
+        coaGroup.ICAGAccounts.append(coaAccount)
+        coaAccount.ICAAAccountNr = 4320
+        coaAccount.ICAAAccountName = "Equity Account: Family"
+        coaGroup.ICAGAccounts.append(coaAccount)
+        coaAccount.ICAAAccountNr = 4321
+        coaAccount.ICAAAccountName = "Drawing Account: Family"
+        coaGroup.ICAGAccounts.append(coaAccount)
         coa.ICAGroups.append(coaGroup)
         coaGroup = ICAGroup()
         coaGroup.ICAGGroupNr = 5000
         coaGroup.ICAGGroupName = "Profit/Loss Accounts"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 5400
         coaAccount.ICAAAccountName = "Fees: Income from Clients"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -287,8 +422,8 @@ class CVM: ObservableObject {
         coa.ICAGroups.append(coaGroup)
         coaGroup = ICAGroup()
         coaGroup.ICAGGroupNr = 6000
-        coaAccount.ICAAAccountName = "Compensation Costs"
-        coaGroup.ICAGAccounts.append(coaAccount)
+        coaGroup.ICAGGroupName = "Compensation Costs"
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 6500
         coaAccount.ICAAAccountName = "Secretarial"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -334,7 +469,7 @@ class CVM: ObservableObject {
         coaGroup = ICAGroup()
         coaGroup.ICAGGroupNr = 7000
         coaGroup.ICAGGroupName = "Office Operations"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 7540
         coaAccount.ICAAAccountName = "Supplies Stationery & Printing"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -359,7 +494,7 @@ class CVM: ObservableObject {
         coaGroup = ICAGroup()
         coaGroup.ICAGGroupNr = 8000
         coaGroup.ICAGGroupName = "Professional/Promotion"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 8570
         coaAccount.ICAAAccountName = "Travel & Related Expense"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -374,7 +509,7 @@ class CVM: ObservableObject {
         coa.ICAGroups.append(coaGroup)
         coaGroup.ICAGGroupNr = 9000
         coaGroup.ICAGGroupName = "Other Costs/Expenses"
-        coaGroup.ICAGAccounts.append(coaAccount)
+//        coaGroup.ICAGAccounts.append(coaAccount)
         coaAccount.ICAAAccountNr = 9580
         coaAccount.ICAAAccountName = "Insurance: Professional/Other"
         coaGroup.ICAGAccounts.append(coaAccount)
@@ -387,6 +522,222 @@ class CVM: ObservableObject {
         coaGroup = ICAGroup()
         return coa
     }
+    
+    func buildNewChartofAccounts() {
+        cvmNewGroup = []
+        cvmNewAccount = []
+        
+        var NAGroup:NewAccountGroup = NewAccountGroup()
+        var NARAccount:NewAccountRecord = NewAccountRecord()
 
+        NAGroup = NewAccountGroup(NAGroupNr: 1000, NAGroupName: "Assets")
+        cvmNewGroup.append(NAGroup)
+        
+        NARAccount = NewAccountRecord(NARAAccountNr: 1100, NARAAccountName: "Cash in Bank", NARAAccountGroup: NAGroup.NAGroupNr, NARADebit: Money(), NARACredit: Money())
+        cvmNewAccount.append(NARAccount)
+        
+        NARAccount.NARAAccountNr = 1109
+        NARAccount.NARAAccountName = "Petty Cash"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1120
+        NARAccount.NARAAccountName = "Client Advances-Unbilled"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1130
+        NARAccount.NARAAccountName = "Client Advances-Billed"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1140
+        NARAccount.NARAAccountName = "Other Receivables Deposits etc."
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1150
+        NARAccount.NARAAccountName = "Furniture Fixtures & Equipment"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1160
+        NARAccount.NARAAccountName = "Leasehold Improvements"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1170
+        NARAccount.NARAAccountName = "Real Property"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1180
+        NARAccount.NARAAccountName = "Reserve: Depreciation & Amortization"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1190
+        NARAccount.NARAAccountName = "Other Assets"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1198
+        NARAccount.NARAAccountName = "Client Billings"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 1199
+        NARAccount.NARAAccountName = "Lawyer Billings"
+        cvmNewAccount.append(NARAccount)
+        
+        NAGroup = NewAccountGroup(NAGroupNr: 2000, NAGroupName: "Liabilities")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+        
+        NARAccount.NARAAccountNr = 2200
+        NARAccount.NARAAccountName = "Accounts Payable"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 2210
+        NARAccount.NARAAccountName = "Federal Income Tax Withheld"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 2211
+        NARAccount.NARAAccountName = "State Income Tax Withheld"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 2212
+        NARAccount.NARAAccountName = "Employee FICA Tax Withheld"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 2220
+        NARAccount.NARAAccountName = "Employee Medical/RetirementWithheld"
+        cvmNewAccount.append(NARAccount)
+
+        NAGroup = NewAccountGroup(NAGroupNr: 3000, NAGroupName: "Segregated Liabilities")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 3298
+        NARAccount.NARAAccountName = "Client Trust Funds"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 3299
+        NARAccount.NARAAccountName = "Liability: Client Trust Funds"
+        cvmNewAccount.append(NARAccount)
+
+        NAGroup = NewAccountGroup(NAGroupNr: 4000, NAGroupName: "Owners Equity")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 4300
+        NARAccount.NARAAccountName = "Equity Account: Morris"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 4301
+        NARAccount.NARAAccountName = "Drawing Account: Morris"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 4310
+        NARAccount.NARAAccountName = "Equity Account: Linda"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 4311
+        NARAccount.NARAAccountName = "Drawing Account: Linda"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 4320
+        NARAccount.NARAAccountName = "Equity Account: Family"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 4321
+        NARAccount.NARAAccountName = "Drawing Account: Family"
+        cvmNewAccount.append(NARAccount)
+
+        NAGroup = NewAccountGroup(NAGroupNr: 5000, NAGroupName: "Profit/Loss Accounts")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 5400
+        NARAccount.NARAAccountName = "Fees: Income from Clients"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 5460
+        NARAccount.NARAAccountName = "Other Income/Receipts"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 5480
+        NARAccount.NARAAccountName = "Costs: Income-Producing Property"
+        cvmNewAccount.append(NARAccount)
+
+        NAGroup = NewAccountGroup(NAGroupNr: 6000, NAGroupName: "Compensation Costs")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 6500
+        NARAccount.NARAAccountName = "Secretarial"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6501
+        NARAccount.NARAAccountName = "Word Processing"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6502
+        NARAccount.NARAAccountName = "Paralegals/Clerks"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6503
+        NARAccount.NARAAccountName = "Lawyers"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6504
+        NARAccount.NARAAccountName = "Other Non-Owner Employees"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6510
+        NARAccount.NARAAccountName = "FICA & Unemployment Taxes"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6514
+        NARAccount.NARAAccountName = "Employee Retirement Benefits"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6518
+        NARAccount.NARAAccountName = "Employee Training & Education"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6519
+        NARAccount.NARAAccountName = "Other Employee Costs Occupancy"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6520
+        NARAccount.NARAAccountName = "Office Rent"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6521
+        NARAccount.NARAAccountName = "Parking"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6523
+        NARAccount.NARAAccountName = "Real Estate Taxes & Insurance"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6525
+        NARAccount.NARAAccountName = "Utilities Other Than Telephone"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 6527
+        NARAccount.NARAAccountName = "Cleaning/Housekeeping — Office"
+
+        NAGroup = NewAccountGroup(NAGroupNr: 7000, NAGroupName: "Office Operations")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 7540
+        NARAccount.NARAAccountName = "Supplies Stationery & Printing"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 7541
+        NARAccount.NARAAccountName = "Postage & Delivery"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 7542
+        NARAccount.NARAAccountName = "Library & Subscriptions"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 7543
+        NARAccount.NARAAccountName = "Telephone/Communications"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 7545
+        NARAccount.NARAAccountName = "Photocopy Expense"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 7546
+        NARAccount.NARAAccountName = "Computer Equipment"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 7548
+        NARAccount.NARAAccountName = "Equipment Rental"
+
+        NAGroup = NewAccountGroup(NAGroupNr: 8000, NAGroupName: "Professional/Promotion")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 8570
+        NARAccount.NARAAccountName = "Travel & Related Expense"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 8571
+        NARAccount.NARAAccountName = "Professional Dues & CLE"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 8572
+        NARAccount.NARAAccountName = "Recruiting: Professional Staff"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 8573
+        NARAccount.NARAAccountName = "Entertainment"
+
+        NAGroup = NewAccountGroup(NAGroupNr: 9000, NAGroupName: "Other Costs/Expenses")
+        cvmNewGroup.append(NAGroup)
+        NARAccount.NARAAccountGroup = NAGroup.NAGroupNr
+
+        NARAccount.NARAAccountNr = 9580
+        NARAccount.NARAAccountName = "Insurance: Professional/Other"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 9581
+        NARAccount.NARAAccountName = "Other Taxes and Similar Costs"
+        cvmNewAccount.append(NARAccount)
+        NARAccount.NARAAccountNr = 9582
+        NARAccount.NARAAccountName = "Client Advances Written Off"
+        cvmNewAccount.append(NARAccount)
+    }
 }
 

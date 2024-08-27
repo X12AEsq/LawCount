@@ -5,12 +5,13 @@
 //  Created by Morris Albers on 8/21/24.
 //
 
+import Foundation
 import SwiftUI
 import SwiftData
 
 struct ContentView: View {
     @EnvironmentObject var cvmInstance:CVM
-    @ObservedObject var router = Router<Path>()
+//    @ObservedObject var router = Router<Path>()
     @StateObject var nav = NavigationStateManager()
     
     @State var transactionCount:Int = 0
@@ -19,17 +20,14 @@ struct ContentView: View {
 //    @State private var showingListTransactions = false
     
     var moduleTitle:String = "Main Menu"
-
+ 
     var body: some View {
         NavigationStack(path: $nav.selectionPath) {
             VStackLayout(alignment: .leading) {
-                HStack {
-                    Text(cvmInstance.selectedPractice())
-                    Spacer()
-                }
-                .font(.system(size: 30))
-                .padding(.leading, 20)
-                .padding(.bottom, 20)
+                Text(cvmInstance.moduleTitle(mod: "Law Accounting"))
+                    .font(.system(size: 20))
+                    .padding(.leading, 20)
+                    .padding(.bottom, 20)
 
                 HStack {
                     NavigationLink("Documents", value: "DocumentMenu")
@@ -37,11 +35,20 @@ struct ContentView: View {
                 }
                 .padding(.leading, 20)
                 .padding(.bottom, 5)
+
+                HStack {
+                    NavigationLink("Transactions", value: "TransactionMenu")
+                    Spacer()
+                }
+                .padding(.leading, 20)
+                .padding(.bottom, 5)
                 Spacer()
                 HStack {
                     Button(action: {
-                        cvmInstance.readJSON()
+                        cvmInstance.readNewJSON()
                         transactionCount = cvmInstance.cvmTransactionCount
+// TODO: change this to read from JSON backup
+                        cvmInstance.convertAccounts()
                         accountCount = cvmInstance.cvmAccountCount
                     }) {
                         Text(" Reload from JSON ")
@@ -52,6 +59,8 @@ struct ContentView: View {
                     Button(action: {
                         cvmInstance.convertTransactions()
                         transactionCount = cvmInstance.cvmTransactionCount
+                        cvmInstance.convertAccounts()
+                        accountCount = cvmInstance.cvmAccountCount
                     }) {
                         Text(" Reload from Old Journal ")
                             .padding(.leading, 10.0)
@@ -79,10 +88,18 @@ struct ContentView: View {
                     DocumentsView()
                 case "ListTransactions":
                     ListTransactionsView()
+                case "TransactionMenu":
+                    SelectTransactionView()
+                case "ListAccounts":
+                    ListAccountsView()
                 default:
                     DetailView()
                 }
             }
+            .navigationDestination(for: IJTrans.self) { value in
+                OneTransactionView(itr: value)
+            }
+
             .onAppear(perform: {
                 transactionCount = cvmInstance.cvmTransactionCount
                 accountCount = cvmInstance.cvmAccountCount

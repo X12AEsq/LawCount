@@ -41,6 +41,10 @@ struct Money:Codable {
         }
      }
     
+    init(moneyAmount: Int) {
+        self.moneyAmount = moneyAmount
+    }
+    
     var rawMoney:String {
         let xC:String = "\(String(format: "%02d", abs(self.moneyAmount % 100)))"
         let xD:String = "\(String(format: "%8d", self.moneyAmount / 100))"
@@ -49,8 +53,57 @@ struct Money:Codable {
     
     var rawMoney11:String {
         var work:String = self.rawMoney.trimmingCharacters(in: .whitespacesAndNewlines)
-        while work.count < 11 { work = work + "0" }
-        return work
+        let workArray = Array(work)
+        var filteredArray:[Character] = []
+        var i = workArray.count - 1
+        var j = 0;
+        var foundDecimalLoc:Int = -1
+        while j < i {
+            if workArray[j] == "." {
+                foundDecimalLoc = j
+            }
+            j += 1
+        }
+        
+        if foundDecimalLoc >= 0 {
+            j = i
+            while j >= foundDecimalLoc {
+                let found:Character = workArray[j]
+                filteredArray.append(found)
+                j -= 1
+            }
+        } else {
+            j = workArray.count
+        }
+        
+//        j -= 1
+        
+        while j >= 0 {
+            filteredArray.append(workArray[j])
+            j -= 1
+            if j >= 0 {
+                filteredArray.append(workArray[j])
+                j -= 1
+                if j >= 0 {
+                    filteredArray.append(workArray[j])
+                    j -= 1
+                    if j >= 0 {
+                        filteredArray.append(",")
+                    }
+                }
+            }
+        }
+        
+        i = filteredArray.count - 1
+        var workOut:String = ""
+        
+        while i >= 0 {
+            workOut = workOut + String(filteredArray[i])
+            i -= 1
+        }
+        
+        while workOut.count < 11 { workOut = " " + workOut }
+        return workOut
     }
     
     init() {

@@ -17,7 +17,15 @@ struct IJTrans: Codable, Hashable {
         hasher.combine(IJTSeqNr)
     }
     
-    struct IJTSegment: Codable {
+    struct IJTSegment: Codable, Hashable {
+        static func == (lhs: IJTSegment, rhs: IJTSegment) -> Bool {
+            return lhs.IJTSAccountNr == rhs.IJTSAccountNr &&
+            lhs.IJTSAccountName == rhs.IJTSAccountName
+        }
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(IJTSAccountNr)
+        }
         var IJTSAccountNr:Int = 0
         var IJTSAccountName = ""
         var IJTSDebit:Money = Money()
@@ -57,5 +65,4 @@ struct IJTrans: Codable, Hashable {
         pl += FormattingService.ljf(base: IJTName, len: 25)
         return pl
     }
-
 }

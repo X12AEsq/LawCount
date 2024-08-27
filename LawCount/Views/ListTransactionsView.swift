@@ -9,24 +9,33 @@ import SwiftUI
 
 struct ListTransactionsView: View {
     @EnvironmentObject var cvmInstance:CVM
-    @EnvironmentObject var router: Router<Path>
+//    @EnvironmentObject var router: Router<Path>
     
     @State var transactionList:String = ""
-    
-    var moduleTitle:String = "List Transactions"
     
     var body: some View {
         HStack(alignment:.top) {
             Spacer()
             VStack(alignment: .leading) {
                 HStack {
-                    Text(cvmInstance.selectedPractice())
-                        .font(.system(size: 30))
+                    Text(cvmInstance.moduleTitle(mod: "List Transactions"))
+                        .font(.system(size: 20))
                     Spacer()
                 }
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
-                Spacer()
+                Button("Save to disk") {
+                    let data = Data(transactionList.utf8)
+                    let url = URL.documentsDirectory.appending(path: "TransactionList.txt")
+
+                    do {
+                        try data.write(to: url, options: [.atomic, .completeFileProtection])
+//                        let input = try String(contentsOf: url)
+//                        print(input)
+                    } catch {
+                        print(error.localizedDescription)
+                    }
+                }
                 ScrollView {
                     VStack (alignment: .leading) {
                         ForEach(cvmInstance.cvmTransactions, id: \.self) { ctr in

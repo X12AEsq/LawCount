@@ -10,14 +10,13 @@ import SwiftUI
 struct DocumentsView: View {
     @EnvironmentObject var cvmInstance:CVM
     @EnvironmentObject var router: Router<Path>
-    var moduleTitle:String = "Documents Menu"
     var body: some View {
         HStack(alignment:.top) {
             Spacer()
             VStack(alignment: .leading) {
                 HStack {
-                    Text(cvmInstance.selectedPractice())
-                        .font(.system(size: 30))
+                    Text(cvmInstance.moduleTitle(mod: "Documents Menu"))
+                        .font(.system(size: 20))
                     Spacer()
                 }
                 .padding(.leading, 20)
@@ -26,7 +25,12 @@ struct DocumentsView: View {
                     NavigationLink("List Transactions", value: "ListTransactions")
                     Spacer()
                 }
-//                .navigationTitle(parentTitle)
+                .padding(.leading, 20)
+                .padding(.bottom, 20)
+                HStack {
+                    NavigationLink("List Accounts", value: "ListAccounts")
+                    Spacer()
+                }
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
                 Spacer()
