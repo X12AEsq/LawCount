@@ -10,26 +10,26 @@ import SwiftUI
 struct OneGroupView: View {
     @EnvironmentObject var cvmInstance:CVM
 
-    var ICAG:ICAGroup
-    @State var ICAGAccounts:[ICAAccount] = [ICAAccount]()
+    var NTG:NewAccountGroup
+    @State var NARAccounts:[NewAccountRecord] = [NewAccountRecord]()
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                Text(ICAG.printLine)
+                Text(NTG.printLine)
                     .font(.system(.body, design: .monospaced))
                 Spacer()
             }
-            ForEach(ICAG.ICAGAccounts, id: \.self) { ICAA in
+            ForEach(NARAccounts, id: \.self) { NAR in
                 HStack {
-                    Text(ICAA.printLine)
+                    Text(NAR.printLine)
                         .font(.system(.body, design: .monospaced))
                     Spacer()
                 }
             }
         }
-//        .onAppear(perform: {
-//            ICAGAccounts = ICAG.ICAGAccounts
-//        })
+        .onAppear(perform: {
+            NARAccounts = cvmInstance.cvmNewAccount.filter( {$0.NARAAccountGroup == NTG.NAGroupNr } )
+        })
     }
 }
 

@@ -10,48 +10,48 @@ import SwiftData
 
 struct NewAccountTransaction: Codable, Hashable {
     static func == (lhs: NewAccountTransaction, rhs: NewAccountTransaction) -> Bool {
-        return lhs.NTSSeqNr == rhs.NTSSeqNr
+        return lhs.NATSeqNr == rhs.NATSeqNr
     }
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(NTSSeqNr)
+        hasher.combine(NATSeqNr)
     }
 
-    var NTSSeqNr:Int = 0
-    var NTSProcessed:Bool = false
-    var NTSDate:ExtDate = ExtDate()
-    var NTSType:String = ""
-    var NTSNum:String = ""
-    var NTSName:String = ""
+    var NATSeqNr:Int = 0
+    var NATProcessed:Bool = false
+    var NATDate:ExtDate = ExtDate()
+    var NATType:String = ""
+    var NATNum:String = ""
+    var NATName:String = ""
     
-    init(NTSSeqNr: Int, NTSProcessed: Bool, NTSDate: ExtDate, NTSType: String, NTSNum: String, NTSName: String) {
-        self.NTSSeqNr = NTSSeqNr
-        self.NTSProcessed = NTSProcessed
-        self.NTSDate = NTSDate
-        self.NTSType = NTSType
-        self.NTSNum = NTSNum
-        self.NTSName = NTSName
+    init(NATSeqNr: Int, NATProcessed: Bool, NATDate: ExtDate, NATType: String, NATNum: String, NATName: String) {
+        self.NATSeqNr = NATSeqNr
+        self.NATProcessed = NATProcessed
+        self.NATDate = NATDate
+        self.NATType = NATType
+        self.NATNum = NATNum
+        self.NATName = NATName
     }
     
     init() {
-        self.NTSSeqNr = 0
-        self.NTSProcessed = false
-        self.NTSDate = ExtDate()
-        self.NTSType = ""
-        self.NTSNum = ""
-        self.NTSName = ""
+        self.NATSeqNr = 0
+        self.NATProcessed = false
+        self.NATDate = ExtDate()
+        self.NATType = ""
+        self.NATNum = ""
+        self.NATName = ""
     }
 
     @Transient var shortPrintLine:String {
-        var pl:String = FormattingService.rjf(base: String(NTSSeqNr), len: 5, zeroFill: true)
+        var pl:String = FormattingService.rjf(base: String(NATSeqNr), len: 5, zeroFill: true)
         pl += " "
-        pl += FormattingService.ljf(base: NTSDate.exdFormatted, len: 11)
+        pl += FormattingService.ljf(base: NATDate.exdFormatted, len: 11)
         pl += " "
-        pl += FormattingService.ljf(base: NTSType, len: 20)
+        pl += FormattingService.ljf(base: NATType, len: 20)
         pl += " "
-        pl += FormattingService.ljf(base: NTSNum, len: 15)
+        pl += FormattingService.ljf(base: NATNum, len: 15)
         pl += " "
-        pl += FormattingService.ljf(base: NTSName, len: 25)
+        pl += FormattingService.ljf(base: NATName, len: 25)
         return pl
     }
 }

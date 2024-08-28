@@ -35,8 +35,8 @@ struct ListAccountsView: View {
                 }
                  ScrollView {
                     VStack (alignment: .leading) {
-                        ForEach(cvmInstance.cvmCOA.ICAGroups, id: \.self) { ICAG in
-                            OneGroupView(ICAG: ICAG)
+                        ForEach(cvmInstance.cvmNewGroup, id: \.self) { NTG in
+                            OneGroupView(NTG: NTG)
                         }
                     }
                 }
@@ -49,11 +49,12 @@ struct ListAccountsView: View {
         
     func buildAccountsList() -> String {
         var tl:String = ""
-        for ICAG in cvmInstance.cvmCOA.ICAGroups {
-            tl += ICAG.printLine
+        for NTG in cvmInstance.cvmNewGroup {
+            tl += NTG.printLine
             tl += "\n"
-            for ICAA in ICAG.ICAGAccounts {
-                tl += "  " + ICAA.printLine + "\n"
+            let accts:[NewAccountRecord] = cvmInstance.cvmNewAccount.filter( {$0.NARAAccountGroup == NTG.NAGroupNr } )
+            for NAR in accts {
+                tl += "  " + NAR.printLine + "\n"
             }
         }
         return tl

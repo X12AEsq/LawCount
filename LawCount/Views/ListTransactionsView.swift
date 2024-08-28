@@ -38,7 +38,7 @@ struct ListTransactionsView: View {
                 }
                 ScrollView {
                     VStack (alignment: .leading) {
-                        ForEach(cvmInstance.cvmTransactions, id: \.self) { ctr in
+                        ForEach(cvmInstance.cvmNewTrans, id: \.self) { ctr in
                             HStack {
                                 Text(ctr.shortPrintLine)
                                     .font(.system(.body, design: .monospaced))
@@ -56,7 +56,7 @@ struct ListTransactionsView: View {
     
     func buildTransactionList() -> String {
         var tl:String = ""
-        for ctr in cvmInstance.cvmTransactions {
+        for ctr in cvmInstance.cvmNewTrans {
             tl += ctr.shortPrintLine
             tl += "\n"
         }

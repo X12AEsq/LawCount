@@ -46,10 +46,10 @@ struct ContentView: View {
                 HStack {
                     Button(action: {
                         cvmInstance.readNewJSON()
-                        transactionCount = cvmInstance.cvmTransactionCount
+                        transactionCount = cvmInstance.cvmNewTrans.count
 // TODO: change this to read from JSON backup
-                        cvmInstance.convertAccounts()
-                        accountCount = cvmInstance.cvmAccountCount
+//                        cvmInstance.convertAccounts()
+                        accountCount = cvmInstance.cvmNewAccount.count
                     }) {
                         Text(" Reload from JSON ")
                             .padding(.leading, 10.0)
@@ -96,8 +96,9 @@ struct ContentView: View {
                     DetailView()
                 }
             }
-            .navigationDestination(for: IJTrans.self) { value in
-                OneTransactionView(itr: value)
+            .navigationDestination(for: NewAccountTransaction.self) { value in
+                Text("Transaction")
+//                OneTransactionView(itr: value)
             }
 
             .onAppear(perform: {

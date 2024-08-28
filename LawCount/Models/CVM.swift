@@ -287,7 +287,7 @@ class CVM: ObservableObject {
             thisTrans.IJTName = workXtracts[0].ijxName
             let workSources = workXtracts.filter( { $0.ijxSeqNr == currTrans } )
             
-            let newTransaction = NewAccountTransaction(NTSSeqNr: workXtracts[0].ijxSeqNr, NTSProcessed: false, NTSDate: workXtracts[0].ijxDate, NTSType: workXtracts[0].ijxType, NTSNum: workXtracts[0].ijxNum, NTSName: workXtracts[0].ijxName)
+            let newTransaction = NewAccountTransaction(NATSeqNr: workXtracts[0].ijxSeqNr, NATProcessed: false, NATDate: workXtracts[0].ijxDate, NATType: workXtracts[0].ijxType, NATNum: workXtracts[0].ijxNum, NATName: workXtracts[0].ijxName)
             cvmNewTrans.append(newTransaction)
             
             workXtracts = workXtracts.filter( { $0.ijxSeqNr != currTrans } ) // cut out extract set
@@ -298,7 +298,7 @@ class CVM: ObservableObject {
                 thisTrans.IJTSegments.append(wx)
                 
                 segSeq += 1
-                let NewSegment:NewTransactionSegment = NewTransactionSegment(NTSParentTransaction: newTransaction.NTSSeqNr, NTSSeqNr: segSeq, NTSAccountNr: ws.ijxAccountNr, NTSAccountName: ws.ijxAccountName, NTSDebit: ws.ijxDebit, NTSCredit: ws.ijxCredit)
+                let NewSegment:NewTransactionSegment = NewTransactionSegment(NTSParentTransaction: newTransaction.NATSeqNr, NTSSeqNr: segSeq, NTSAccountNr: ws.ijxAccountNr, NTSAccountName: ws.ijxAccountName, NTSDebit: ws.ijxDebit, NTSCredit: ws.ijxCredit)
                 cvmNewSegments.append(NewSegment)
             }
             workTrans.append(thisTrans)
