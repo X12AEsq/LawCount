@@ -97,8 +97,7 @@ struct ContentView: View {
                 }
             }
             .navigationDestination(for: NewAccountTransaction.self) { value in
-                Text("Transaction")
-//                OneTransactionView(itr: value)
+                OneTransactionView(nat: value)
             }
 
             .onAppear(perform: {

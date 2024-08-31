@@ -52,22 +52,112 @@ class CVM: ObservableObject {
         return selectedPractice() + " " + mod
     }
     
-    func retrieveAccount(acctNr: Int) -> (status:Int, acct:ICAAccount, acctName:String) {
-        var tempAccounts:[ICAAccount] = [ICAAccount]()
-        for i in 0 ... self.cvmCOA.ICAGroups.count - 1 {
-            for j in 0 ... self.cvmCOA.ICAGroups[i].ICAGAccounts.count - 1 {
-                if self.cvmCOA.ICAGroups[i].ICAGAccounts[j].ICAAAccountNr == acctNr {
-                    tempAccounts.append(self.cvmCOA.ICAGroups[i].ICAGAccounts[j])
-                }
+    func retrieveAccount(acctNr: Int) -> (status:Int, acct:NewAccountRecord, acctName:String, acctOffset:Int) {
+        struct acctInfo {
+            var acct:NewAccountRecord = NewAccountRecord()
+            var subs:Int = 0
+        }
+        var tempAccounts:[acctInfo] = []
+//        var tempAccounts:[NewAccountRecord] = [NewAccountRecord]()
+        for i in 0 ... self.cvmNewAccount.count - 1 {
+            if self.cvmNewAccount[i].NARAAccountNr == acctNr {
+                tempAccounts.append(acctInfo(acct:self.cvmNewAccount[i], subs:i))
             }
         }
         switch tempAccounts.count {
         case 0:
-            return(-2, ICAAccount(), "None found")
+            return(-2, NewAccountRecord(), "None found", -1)
         case 1:
-            return(0, tempAccounts[0], tempAccounts[0].ICAAAccountName)
+            return(0, tempAccounts[0].acct, tempAccounts[0].acct.NARAAccountName, tempAccounts[0].subs)
         default:
-            return(-3, ICAAccount(), "Multiples found")
+            return(-3, NewAccountRecord(), "Multiples found", -1)
+        }
+    }
+    
+    func updateFullTrans(inTrans:FullTransaction) {
+/*
+ update the transaction main with whatever, likely including the "processed" status
+ update each segment with individual changes
+ update each account with the associated segment
+ */
+        struct pending {
+            var absSegment:Int = 0
+            var oldSegment:Int = 0
+            var oldAcct:Int = 0
+        }
+        var components:[pending] = []
+        let transStatus = self.retrieveTransaction(tranNr: inTrans.ftxTrans.NATSeqNr)
+        if transStatus.status != 0 { return }
+        for i in 0 ... inTrans.ftxSegs.count - 1 {
+            let segStatus = self.retrieveSegment(transNr: inTrans.ftxTrans.NATSeqNr, segNr: inTrans.ftxSegs[i].NTSSeqNr)
+            if segStatus.status != 0 { return }
+//     (status:Int, acct:NewAccountRecord, acctName:String, acctOffset:Int) {
+//     (status:Int, trans:NewTransactionSegment, message:String, segOffset:Int) {
+            let acctStatus = self.retrieveAccount(acctNr: inTrans.ftxSegs[i].NTSAccountNr)
+            if acctStatus.status != 0 { return }
+            components.append(pending(absSegment:segStatus.segOffset, oldSegment: i, oldAcct: acctStatus.acctOffset))
+        }
+/*
+ transStatus.transOffset has the subscript for the parent transaction
+ each pending in components has the subscript for the relevant segment, and the associated account
+ */
+        for i in 0 ... components.count - 1 {
+            cvmNewAccount[components[i].oldAcct].NARACredit =
+                cvmNewAccount[components[i].oldAcct].NARACredit +
+                inTrans.ftxSegs[components[i].oldSegment].NTSCredit
+            cvmNewAccount[components[i].oldAcct].NARADebit =
+                cvmNewAccount[components[i].oldAcct].NARADebit +
+                inTrans.ftxSegs[components[i].oldSegment].NTSDebit
+            cvmNewSegments[components[i].absSegment].NTSAccountNr =
+                inTrans.ftxSegs[components[i].oldSegment].NTSAccountNr
+            cvmNewSegments[components[i].absSegment].NTSAccountName =
+                inTrans.ftxSegs[components[i].oldSegment].NTSAccountName
+        }
+        cvmNewTrans[transStatus.transOffset].NATProcessed = true
+        return
+    }
+    
+    
+    func retrieveTransaction(tranNr: Int) -> (status:Int, trans:NewAccountTransaction, message:String, transOffset:Int) {
+        struct tranInfo {
+            var tran:NewAccountTransaction = NewAccountTransaction()
+            var subs:Int = 0
+        }
+        var tempTrans:[tranInfo] = []
+        for i in 0 ... self.cvmNewTrans.count - 1 {
+            if self.cvmNewTrans[i].NATSeqNr == tranNr {
+                tempTrans.append(tranInfo(tran: self.cvmNewTrans[i], subs: i))
+            }
+        }
+        switch tempTrans.count {
+        case 0:
+            return(-2, NewAccountTransaction(), "None Found", -1)
+        case 1:
+            return(0, tempTrans[0].tran, "", tempTrans[0].subs)
+        default:
+            return(-3, NewAccountTransaction(), "Multiples Found", -1)
+        }
+    }
+    
+    func retrieveSegment(transNr:Int, segNr:Int) -> (status:Int, trans:NewTransactionSegment, message:String, segOffset:Int) {
+        struct segmentInfo {
+            var segment:NewTransactionSegment = NewTransactionSegment()
+            var subscr:Int = 0
+        }
+        var tempSegments:[segmentInfo] = []
+        for i in 0 ... self.cvmNewSegments.count - 1 {
+            if self.cvmNewSegments[i].NTSParentTransaction == transNr
+                && self.cvmNewSegments[i].NTSSeqNr == segNr {
+                tempSegments.append(segmentInfo(segment: cvmNewSegments[i], subscr: i))
+            }
+        }
+        switch tempSegments.count {
+        case 0:
+            return(-2, NewTransactionSegment(), "None Found", -1)
+        case 1:
+            return(0, tempSegments[0].segment, "", tempSegments[0].subscr)
+        default:
+            return(-2, NewTransactionSegment(), "Multiples Found", -1)
         }
     }
     

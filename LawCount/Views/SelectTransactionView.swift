@@ -9,6 +9,7 @@ import SwiftUI
 
 struct SelectTransactionView: View {
     @EnvironmentObject var cvmInstance:CVM
+    @EnvironmentObject var nav:NavigationStateManager
 //    @EnvironmentObject var router: Router<Path>
     var body: some View {
         VStack(alignment: .leading) {

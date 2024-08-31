@@ -52,7 +52,7 @@ struct Money:Codable {
     }
     
     var rawMoney11:String {
-        var work:String = self.rawMoney.trimmingCharacters(in: .whitespacesAndNewlines)
+        let work:String = self.rawMoney.trimmingCharacters(in: .whitespacesAndNewlines)
         let workArray = Array(work)
         var filteredArray:[Character] = []
         var i = workArray.count - 1

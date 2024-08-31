@@ -9,228 +9,256 @@ import SwiftUI
 
 struct OneTransactionView: View {
     @EnvironmentObject var cvmInstance:CVM
-    var itr:IJTrans
-    @State var workTrans:IJTrans = IJTrans()
-//    @State var workSegments:[IJTrans.IJTSegment] = [IJTrans.IJTSegment]()
-    @State var workSeg:Int = -1
-    @State var workTransNumberNumber:Int = 0
-    @State var workTransactionNumber:String = ""
-    @State var workTransactionName:String = ""
-    @State var workTransactionDebitString:String = Money(moneyAmount: 0).rawMoney11
-    @State var workTransactionCreditString:String = Money(moneyAmount: 0).rawMoney11
-    @State var workTransactionDebitMoney:Money = Money()
-    @State var workTransactionCreditMoney:Money = Money()
-    @State var segmentsChanged:Bool = false
+    @EnvironmentObject var nav:NavigationStateManager
+    var nat:NewAccountTransaction
+    @State var origTRX:FullTransaction = FullTransaction()
+    @State var modTRX:FullTransaction = FullTransaction()
+    @State var whichSegment:Int = 0
+    @State var modSeqNr:Int = 0
+    @State var modAccountNr:Int = 0
+    @State var modAccountString:String = "0"
+    @State var modAccountName = ""
+    @State var modDebit:Money = Money()
+    @State var modDebitString:String = ""
+    @State var modCredit:Money = Money()
+    @State var modCreditString:String = ""
+    @State var changeIndicator:Bool = false
+    @State var totalCredit:Money = Money()
+    @State var totalDebit:Money = Money()
+    @State var statusMessage:String = ""
 
     var body: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text(cvmInstance.moduleTitle(mod: "Handle Transaction"))
-                    .font(.system(size: 20))
-                Spacer()
-            }
-            .padding(.leading, 20)
-            .padding(.bottom, 20)
-/*
-    Transaction base - contains the transaction date, other significant date
- */
-            HStack {
-                Text(String(itr.IJTSeqNr))
-                Text(itr.IJTDate.exdFormatted)
-                Text(itr.IJTType)
-                Text(itr.IJTNum)
-                Text(itr.IJTName)
-            }
-            .padding(.bottom, 10)
-/*
-    Segments - contain the various accounts to be impacted by this transaction
- */
-            ForEach(itr.IJTSegments, id: \.self) { wseg in      // these are the transaction segments
+            VStack(alignment: .leading) {
                 HStack {
-/*
-    This button is for each segment; if it's clicked, we want to try to update that segment
-        That's why we transfer data from the segment to the working fields in the view
- */
-                    Button {
-                        print("above push")
-                        for i in 0 ... itr.IJTSegments.count - 1 {
-                            if itr.IJTSegments[i] == wseg {
-                                workSeg = i
-                                workTransNumberNumber = workTrans.IJTSegments[workSeg].IJTSAccountNr
-                                workTransactionNumber = String(workTransNumberNumber)
-                                workTransactionName = workTrans.IJTSegments[workSeg].IJTSAccountName
-                                workTransactionDebitMoney = workTrans.IJTSegments[workSeg].IJTSDebit
-                                workTransactionCreditMoney = workTrans.IJTSegments[workSeg].IJTSCredit
-                                workTransactionDebitString = workTransactionDebitMoney.rawMoney11
-                                workTransactionCreditString = workTransactionCreditMoney.rawMoney11
-                                let status = cvmInstance.retrieveAccount(acctNr: workTransNumberNumber)
-                                print(status)
-                            }
-                        }
-                    } label: {
-                        HStack {
-                            Text(" ")
-                            Text(String(wseg.IJTSAccountNr))
-                            Text(wseg.IJTSAccountName)
-                            Text(wseg.IJTSDebit.rawMoney11)
-                            Text(wseg.IJTSCredit.rawMoney11)
-                            Text(" ")
-                        }
-                    }
-                    .buttonStyle(CustomButton3())
+                    Text(cvmInstance.moduleTitle(mod: "Handle Transaction"))
+                        .font(.system(size: 20))
                     Spacer()
                 }
+                .padding(.leading, 20)
                 .padding(.bottom, 10)
-            }
-/*
-    if the segments have changed, need to present the opportunity to save the changes - probably need to
-        extend this to the entire transaction
- */
-            if segmentsChanged {
-                VStack(alignment: .leading) {
-                    Button {
-                        print("handle edit and save")
-                    } label: {
-                        Text(" Save Transaction ")
+                if statusMessage != "" {
+                    Text(statusMessage)
+                        .font(.system(size: 20))
+                }
+                Text("Original")
+                    .padding(.leading, 20)
+                HStack {
+                    Text(String(origTRX.ftxTrans.NATSeqNr))
+                    if origTRX.ftxTrans.NATProcessed {
+                        Text("Processed")
+                    } else {
+                        Text("Not Processed")
                     }
-                    .buttonStyle(CustomButton3())
-                    .padding(.top, 20)
-                    .padding(.bottom, 10)
-                    ForEach(workTrans.IJTSegments, id: \.self) { wseg in
+                    Text(origTRX.ftxTrans.NATDate.exdFormatted)
+                    Text(origTRX.ftxTrans.NATType)
+                    Text(origTRX.ftxTrans.NATNum)
+                    Text(origTRX.ftxTrans.NATName)
+                    Spacer()
+                }
+                .padding(.leading, 20)
+                ForEach(origTRX.ftxSegs, id: \.self) { seg in
+                    HStack {
+                        Text(String(seg.NTSSeqNr))
+                        Text(String(seg.NTSAccountNr))
+                        Text(seg.NTSAccountName)
+                        Text(seg.NTSDebit.rawMoney11)
+                        Text(seg.NTSCredit.rawMoney11)
+                        Spacer()
+                    }
+                    .padding(.leading, 10)
+                }
+                .padding(.leading, 20)
+            }
+            .padding(.bottom, 20)
+            if !origTRX.ftxTrans.NATProcessed {
+                
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("Modified")
+                        Text("Total Debits: \(totalDebit.rawMoney11)")
+                        Text("Total Credits: \(totalCredit.rawMoney11)")
+                        if changeIndicator {
+                            Button(action: {
+                                let edit = editTransaction()
+                                if edit.status == 0 {
+                                    modTRX.ftxTrans.NATProcessed = true
+                                    cvmInstance.updateFullTrans(inTrans: modTRX)
+                                    if nav.selectionPath.count > 0 {
+                                        nav.selectionPath.removeLast()
+                                    } else {
+                                        nav.popToRoot()
+                                    }
+                                    print("XX")
+                                } else {
+                                    statusMessage = edit.descr
+                                }
+                            }) {
+                                Text("Save transaction")
+                            }
+                            .buttonStyle(CustomButton4())
+                        }
+                    }
+                    .padding(.leading, 20)
+                    HStack {
+                        Text(String(modTRX.ftxTrans.NATSeqNr))
+                        if modTRX.ftxTrans.NATProcessed {
+                            Text("Processed")
+                        } else {
+                            Text("Not Processed")
+                        }
+                        Text(modTRX.ftxTrans.NATDate.exdFormatted)
+                        Text(modTRX.ftxTrans.NATType)
+                        Text(modTRX.ftxTrans.NATNum)
+                        Text(modTRX.ftxTrans.NATName)
+                        Spacer()
+                    }
+                    .padding(.leading, 20)
+                    ForEach(modTRX.ftxSegs, id: \.self) { seg in
                         HStack {
-                            Text(" ")
-                            Text(String(wseg.IJTSAccountNr))
-                            Text(wseg.IJTSAccountName)
-                            Text(wseg.IJTSDebit.rawMoney11)
-                            Text(wseg.IJTSCredit.rawMoney11)
-                            Text(" ")
+                            Button(action: {
+                                whichSegment = seq2sub(seq: seg.NTSSeqNr)
+                                modSeqNr = modTRX.ftxSegs[whichSegment].NTSSeqNr
+                                modAccountNr = modTRX.ftxSegs[whichSegment].NTSAccountNr
+                                modAccountString = String(modAccountNr)
+                                modAccountName = modTRX.ftxSegs[whichSegment].NTSAccountName
+                                modCredit = modTRX.ftxSegs[whichSegment].NTSCredit
+                                modDebit = modTRX.ftxSegs[whichSegment].NTSDebit
+                                modDebitString = String(modDebit.moneyAmount)
+                                modCreditString = String(modCredit.moneyAmount)
+                            }) {
+                                Text(String(seg.NTSSeqNr))
+                            }
+                            .buttonStyle(CustomButton4())
+                            Text(String(seg.NTSAccountNr))
+                            Text(seg.NTSAccountName)
+                            Text(seg.NTSDebit.rawMoney11)
+                            Text(seg.NTSCredit.rawMoney11)
+                            Spacer()
                         }
+                        .padding(.leading, 20)
                     }
+                    .padding(.leading, 20)
                 }
-            }
-            if workSeg >= 0 {
                 VStack(alignment: .leading) {
-                    Button {
-                        print("above push")
-// TODO: Update working transaction here
-//  form takes data into workTransaction...
-//  holding area for pending transaction update is workTrans
-//  to save input, move it from workTransaction... to corresponding workTrans.IJTrans.IJTSegment[workSeg]...
-                        
-// TODO: Figure out why these simple assignments aren't happening; the right hand value just isn't replacing the left hand value; no indication of an error
-                        workTrans.IJTSegments[workSeg].IJTSAccountNr = workTransNumberNumber
-                        workTransactionNumber = String(workTrans.IJTSegments[workSeg].IJTSAccountNr)
-                        workTrans.IJTSegments[workSeg].IJTSAccountName = workTransactionName
-                        workSeg = -1
-                    } label: {
-                        Text(" done with segment ")
-                    }
-                    .buttonStyle(CustomButton3())
-                    .padding(.top, 20)
-                    
-                    Form {
-                        Section(header: Text("Transaction Segment").background(Color.teal).foregroundColor(.white)) {
+                    if whichSegment >= 0 {
+                        Text("Segment Entry")
+                        GeometryReader { geo in
                             HStack {
-                                Text("Account number: ").foregroundColor(.mint)
-                                TextField("Account number", text: $workTransactionNumber)
-                                    .onSubmit(of: /*@START_MENU_TOKEN@*/.text/*@END_MENU_TOKEN@*/) {
-                                        handleChangedNumber(newNum: workTransactionNumber)
+                                Text("Account Number:")
+                                TextField("Number", text: $modAccountString, onEditingChanged: { (editingChanged) in
+                                    if !editingChanged {
+                                        print("TextField focus removed")
+                                        let tempNr:Int = Int(modAccountString) ?? -1
+                                        let tempResult = cvmInstance.retrieveAccount(acctNr: tempNr)
+                                        if tempResult.status == 0 {
+                                            modAccountNr = tempNr
+                                            modAccountName = tempResult.acctName
+                                        }
                                     }
-                            }
-                            HStack {
-                                Text("Account name: ").foregroundColor(.mint)
-                                TextField("Account name", text: $workTransactionName).disableAutocorrection(true)
-                                    .onSubmit(of: /*@START_MENU_TOKEN@*/.text/*@END_MENU_TOKEN@*/) {
-                                        handleAccountNameChanged(newName: workTransactionName)
+                                })
+                                .frame(width: geo.size.width * 0.075)
+                                Text(modAccountName)
+                                Text("Debit \(modDebit.rawMoney11):")
+                                TextField("Digits", text: $modDebitString, onEditingChanged: { (editingChanged) in
+                                    if !editingChanged {
+                                        print(modDebitString)
+                                        print("xx")
                                     }
-                            }
-                            HStack {
-                                Text("Debit Amount: ").foregroundColor(.mint)
-                                TextField("Only digits", text: $workTransactionDebitString).disableAutocorrection(true)
-                                    .onSubmit(of: /*@START_MENU_TOKEN@*/.text/*@END_MENU_TOKEN@*/) {
-                                        let status = handleChangedMoney(newMoney: workTransactionDebitString)
-                                        workTransactionDebitMoney = status.money
-                                        workTransactionDebitString = status.str
+                                })
+                                .frame(width: geo.size.width * 0.1)
+                                
+                                Text("Credit \(modCredit.rawMoney11):")
+                                TextField("Digits", text: $modCreditString, onEditingChanged: { (editingChanged) in
+                                    if !editingChanged {
+                                        print(modCreditString)
+                                        print("xx")
                                     }
-                            }
-                            HStack {
-                                Text("Credit Amount: ").foregroundColor(.mint)
-                                TextField("Only digits", text: $workTransactionCreditString).disableAutocorrection(true)
-                                    .onSubmit(of: /*@START_MENU_TOKEN@*/.text/*@END_MENU_TOKEN@*/) {
-                                        let status = handleChangedMoney(newMoney: workTransactionCreditString)
-                                        workTransactionCreditMoney = status.money
-                                        workTransactionCreditString = status.str
-                                    }
+                                })
+                                .frame(width: geo.size.width * 0.1)
+                                Button(action: {
+                                    modTRX.ftxSegs[whichSegment].NTSAccountNr = modAccountNr
+                                    modTRX.ftxSegs[whichSegment].NTSAccountName = modAccountName
+                                    modTRX.ftxSegs[whichSegment].NTSCredit = modCredit
+                                    modTRX.ftxSegs[whichSegment].NTSDebit = modDebit
+                                    whichSegment = -1
+                                    changeIndicator = didChange()
+                                }) {
+                                    Text("Save Segment")
+                                }
+                                .buttonStyle(CustomButton4())
+                                
                             }
                         }
                     }
-//                    .onAppear{
-//                        workTransNumberNumber = workTrans.IJTSegments[workSeg].IJTSAccountNr
-//                        workTransactionNumber = String(workTransNumberNumber)
-//                        workTransactionName = workTrans.IJTSegments[workSeg].IJTSAccountName
-//                        workTransactionDebitMoney = workTrans.IJTSegments[workSeg].IJTSDebit
-//                        workTransactionCreditMoney = workTrans.IJTSegments[workSeg].IJTSCredit
-//                        workTransactionDebitString = workTransactionDebitMoney.rawMoney11
-//                        workTransactionCreditString = workTransactionCreditMoney.rawMoney11
-//                        let status = cvmInstance.retrieveAccount(acctNr: workTransNumberNumber)
-//                        print(status)
-//                    }
                 }
-
+                .padding(.leading, 20)
+                .padding(.top, 20)
             }
             Spacer()
+        }.onAppear(perform: {
+            origTRX.ftxTrans = nat
+            origTRX.ftxSegs = cvmInstance.cvmNewSegments.filter({$0.NTSParentTransaction == nat.NATSeqNr}).sorted(by: { $0.NTSSeqNr < $1.NTSSeqNr } )
+            modTRX = origTRX
+            whichSegment = -1
+            statusMessage = ""
+        })
+    }
+        
+    func seq2sub(seq:Int) -> Int {
+        var i:Int = 0
+        while i < origTRX.ftxSegs.count {
+            if origTRX.ftxSegs[i].NTSSeqNr == seq {
+                return i
+            }
+            i += 1
         }
-        .padding(.leading, 20)
-        .onFirstAppear {
-            initWorkArea()
-        }
+        return -1
     }
     
-    func handleAccountNumberChanged(newNum:String) {
-        if workTransactionNumber != newNum {
-            segmentsChanged = true
-            handleChangedNumber(newNum: newNum)
+    func didChange() -> Bool {
+        var i = 0
+        var workDebit:Money = Money()
+        var workCredit:Money = Money()
+        
+        while i < origTRX.ftxSegs.count {
+            workDebit = origTRX.ftxSegs[i].NTSDebit + workDebit
+            i += 1
         }
+        i = 0
+
+        while i < origTRX.ftxSegs.count {
+            workCredit = origTRX.ftxSegs[i].NTSDebit + workCredit
+            i += 1
+        }
+        i = 0
+        
+        totalDebit = workDebit
+        totalCredit = workCredit
+
+        if origTRX.ftxSegs.count != modTRX.ftxSegs.count { return true }
+        origTRX.ftxSegs = origTRX.ftxSegs.sorted(by: { $0.NTSSeqNr < $1.NTSSeqNr } )
+        modTRX.ftxSegs = modTRX.ftxSegs.sorted(by: { $0.NTSSeqNr < $1.NTSSeqNr } )
+        while i < origTRX.ftxSegs.count {
+            if origTRX.ftxSegs[i].NTSSeqNr != modTRX.ftxSegs[i].NTSSeqNr { return true }
+            if origTRX.ftxSegs[i].NTSAccountNr != modTRX.ftxSegs[i].NTSAccountNr { return true }
+            if origTRX.ftxSegs[i].NTSAccountName != modTRX.ftxSegs[i].NTSAccountName { return true }
+            if origTRX.ftxSegs[i].NTSCredit != modTRX.ftxSegs[i].NTSCredit { return true }
+            if origTRX.ftxSegs[i].NTSDebit != modTRX.ftxSegs[i].NTSDebit { return true }
+            i += 1
+        }
+        return false
     }
     
-    func handleAccountNameChanged(newName:String) {
-        workTransactionName = workTrans.IJTSegments[workSeg].IJTSAccountName
-    }
-    
-    func handleChangedNumber(newNum:String) {
-        workTransactionNumber = newNum
-        workTransNumberNumber = Int(newNum) ?? -1
-        workTransactionNumber = String(workTransNumberNumber)
-        let status = cvmInstance.retrieveAccount(acctNr: workTransNumberNumber)
-        if status.status == 0 {
-            workTransactionName = status.acct.ICAAAccountName
-        } else {
-            workTransactionName = ""
+    func editTransaction() -> (status:Int, descr:String) {
+        if totalDebit != totalCredit { return (-1, "Transaction out of balance") }
+        var i = 0
+        while i < modTRX.ftxSegs.count {
+            let acctStatus = cvmInstance.retrieveAccount(acctNr: modTRX.ftxSegs[i].NTSAccountNr)
+            if acctStatus.status != 0 { return (-2, "\(modTRX.ftxSegs[i].NTSAccountName) has invalid account number") }
+            i += 1
         }
-        if workTransactionName != itr.IJTSegments[workSeg].IJTSAccountName  {
-            segmentsChanged = true
-        }
-        print("here")
-    }
-    
-    func handleChangedMoney(newMoney:String) -> (money:Money, str:String) {
-        var workMoney:Money = Money()
-        var workString:String = workMoney.rawMoney11
-        var workMoneyAmount:Int = Int(newMoney) ?? 0
-        workMoney = Money(moneyAmount: workMoneyAmount)
-        workString = workMoney.rawMoney11
-        return(workMoney, workString)
-    }
-                                                        
-    func initWorkArea() {
-        workTrans = IJTrans()
-        workTrans.IJTSeqNr = itr.IJTSeqNr
-        workTrans.IJTDate = itr.IJTDate
-        workTrans.IJTType = itr.IJTType
-        workTrans.IJTNum = itr.IJTNum
-        workTrans.IJTName = itr.IJTName
-        workTrans.IJTSegments = itr.IJTSegments
-        segmentsChanged = false
+        return (0, "")
     }
 }
 
