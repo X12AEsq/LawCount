@@ -57,6 +57,14 @@ struct ContentView: View {
                     }
                     .buttonStyle(CustomButton1())
                     Button(action: {
+                        cvmInstance.writeNewJSON()
+                    }) {
+                        Text(" Save to JSON ")
+                            .padding(.leading, 10.0)
+                            .padding(.trailing, 10.0)
+                    }
+                    .buttonStyle(CustomButton1())
+                    Button(action: {
                         cvmInstance.convertTransactions()
                         transactionCount = cvmInstance.cvmTransactionCount
                         cvmInstance.convertAccounts()

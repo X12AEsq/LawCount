@@ -1,0 +1,38 @@
+[
+  {
+    "NAGroupNr" : 1000,
+    "NAGroupName" : "Assets"
+  },
+  {
+    "NAGroupName" : "Liabilities",
+    "NAGroupNr" : 2000
+  },
+  {
+    "NAGroupNr" : 3000,
+    "NAGroupName" : "Segregated Liabilities"
+  },
+  {
+    "NAGroupNr" : 4000,
+    "NAGroupName" : "Owners Equity"
+  },
+  {
+    "NAGroupNr" : 5000,
+    "NAGroupName" : "Profit\/Loss Accounts"
+  },
+  {
+    "NAGroupNr" : 6000,
+    "NAGroupName" : "Compensation Costs"
+  },
+  {
+    "NAGroupName" : "Office Operations",
+    "NAGroupNr" : 7000
+  },
+  {
+    "NAGroupNr" : 8000,
+    "NAGroupName" : "Professional\/Promotion"
+  },
+  {
+    "NAGroupNr" : 9000,
+    "NAGroupName" : "Other Costs\/Expenses"
+  }
+]

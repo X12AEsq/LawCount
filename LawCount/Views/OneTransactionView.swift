@@ -72,7 +72,6 @@ struct OneTransactionView: View {
             }
             .padding(.bottom, 20)
             if !origTRX.ftxTrans.NATProcessed {
-                
                 VStack(alignment: .leading) {
                     HStack {
                         Text("Modified")
@@ -200,9 +199,75 @@ struct OneTransactionView: View {
             origTRX.ftxTrans = nat
             origTRX.ftxSegs = cvmInstance.cvmNewSegments.filter({$0.NTSParentTransaction == nat.NATSeqNr}).sorted(by: { $0.NTSSeqNr < $1.NTSSeqNr } )
             modTRX = origTRX
+            preEdit()
             whichSegment = -1
             statusMessage = ""
         })
+    }
+    
+    func preEdit() {
+        for i in 0 ... modTRX.ftxSegs.count - 1 {
+            if modTRX.ftxSegs[i].NTSAccountName == "Reimbursement Owed:Owed to Morris Personally" {
+                modTRX.ftxSegs[i].NTSAccountNr = 4300
+                modTRX.ftxSegs[i].NTSAccountName = "Equity Account: Morris"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "NBT Operating Account" {
+                modTRX.ftxSegs[i].NTSAccountNr = 1100
+                modTRX.ftxSegs[i].NTSAccountName = "Cash in Bank"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Reimbursement Owed:Owed to Family Brokerage Acct" {
+                modTRX.ftxSegs[i].NTSAccountNr = 4320
+                modTRX.ftxSegs[i].NTSAccountName = "Equity Account: Family"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Rent Expense" {
+                modTRX.ftxSegs[i].NTSAccountNr = 6520
+                modTRX.ftxSegs[i].NTSAccountName = "Office Rent"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Accounts Payable" {
+                modTRX.ftxSegs[i].NTSAccountNr = 2200
+                modTRX.ftxSegs[i].NTSAccountName = "Accounts Payable"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Insurance Expense" {
+                modTRX.ftxSegs[i].NTSAccountNr = 9580
+                modTRX.ftxSegs[i].NTSAccountName = "Insurance: Professional/Other"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Furniture and Equipment" {
+                modTRX.ftxSegs[i].NTSAccountNr = 1150
+                modTRX.ftxSegs[i].NTSAccountName = "Furniture Fixtures & Equipment"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Telephone Expense:Wireless" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7543
+                modTRX.ftxSegs[i].NTSAccountName = "Telephone/Communications"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Dues and Subscriptions" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7542
+                modTRX.ftxSegs[i].NTSAccountName = "Library & Subscriptions"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Taxes:Taxes-Texas Professional" {
+                modTRX.ftxSegs[i].NTSAccountNr = 9581
+                modTRX.ftxSegs[i].NTSAccountName = "Other Taxes and Similar Costs"
+                changeIndicator = true
+                continue
+            }
+        }
     }
         
     func seq2sub(seq:Int) -> Int {

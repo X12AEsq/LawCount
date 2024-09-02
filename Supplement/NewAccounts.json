@@ -1,0 +1,585 @@
+[
+  {
+    "NARAAccountNr" : 1100,
+    "NARAAccountName" : "Cash in Bank",
+    "NARAAccountGroup" : 1000,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 1000,
+    "NARAAccountName" : "Petty Cash",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 1109
+  },
+  {
+    "NARAAccountNr" : 1120,
+    "NARAAccountGroup" : 1000,
+    "NARAAccountName" : "Client Advances-Unbilled",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Client Advances-Billed",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 1000,
+    "NARAAccountNr" : 1130
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 1140,
+    "NARAAccountName" : "Other Receivables Deposits etc.",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 1000
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 1000,
+    "NARAAccountNr" : 1150,
+    "NARAAccountName" : "Furniture Fixtures & Equipment"
+  },
+  {
+    "NARAAccountGroup" : 1000,
+    "NARAAccountName" : "Leasehold Improvements",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 1160
+  },
+  {
+    "NARAAccountNr" : 1170,
+    "NARAAccountGroup" : 1000,
+    "NARAAccountName" : "Real Property",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 1000,
+    "NARAAccountNr" : 1180,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Reserve: Depreciation & Amortization"
+  },
+  {
+    "NARAAccountNr" : 1190,
+    "NARAAccountGroup" : 1000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Other Assets"
+  },
+  {
+    "NARAAccountName" : "Client Billings",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 1000,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 1198
+  },
+  {
+    "NARAAccountName" : "Lawyer Billings",
+    "NARAAccountNr" : 1199,
+    "NARAAccountGroup" : 1000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 2000,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 2200,
+    "NARAAccountName" : "Accounts Payable",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 2000,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 2210,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Federal Income Tax Withheld"
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 2000,
+    "NARAAccountNr" : 2211,
+    "NARAAccountName" : "State Income Tax Withheld",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountName" : "Employee FICA Tax Withheld",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 2000,
+    "NARAAccountNr" : 2212
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 2000,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 2220,
+    "NARAAccountName" : "Employee Medical\/RetirementWithheld"
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Client Trust Funds",
+    "NARAAccountNr" : 3298,
+    "NARAAccountGroup" : 3000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountName" : "Liability: Client Trust Funds",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 3299,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 3000
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 4300,
+    "NARAAccountGroup" : 4000,
+    "NARAAccountName" : "Equity Account: Morris"
+  },
+  {
+    "NARAAccountGroup" : 4000,
+    "NARAAccountName" : "Drawing Account: Morris",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 4301
+  },
+  {
+    "NARAAccountGroup" : 4000,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Equity Account: Linda",
+    "NARAAccountNr" : 4310,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountNr" : 4311,
+    "NARAAccountGroup" : 4000,
+    "NARAAccountName" : "Drawing Account: Linda",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 4000,
+    "NARAAccountName" : "Equity Account: Family",
+    "NARAAccountNr" : 4320,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 4000,
+    "NARAAccountName" : "Drawing Account: Family",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 4321,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 5400,
+    "NARAAccountName" : "Fees: Income from Clients",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 5000
+  },
+  {
+    "NARAAccountName" : "Other Income\/Receipts",
+    "NARAAccountGroup" : 5000,
+    "NARAAccountNr" : 5460,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 5000,
+    "NARAAccountName" : "Costs: Income-Producing Property",
+    "NARAAccountNr" : 5480,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6500,
+    "NARAAccountName" : "Secretarial",
+    "NARAAccountGroup" : 6000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6501,
+    "NARAAccountGroup" : 6000,
+    "NARAAccountName" : "Word Processing",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 6000,
+    "NARAAccountNr" : 6502,
+    "NARAAccountName" : "Paralegals\/Clerks"
+  },
+  {
+    "NARAAccountName" : "Lawyers",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6503,
+    "NARAAccountGroup" : 6000
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6504,
+    "NARAAccountName" : "Other Non-Owner Employees",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 6000
+  },
+  {
+    "NARAAccountName" : "FICA & Unemployment Taxes",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6510,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 6000
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Employee Retirement Benefits",
+    "NARAAccountNr" : 6514,
+    "NARAAccountGroup" : 6000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 6000,
+    "NARAAccountName" : "Employee Training & Education",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6518,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6519,
+    "NARAAccountName" : "Other Employee Costs Occupancy",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 6000
+  },
+  {
+    "NARAAccountNr" : 6520,
+    "NARAAccountGroup" : 6000,
+    "NARAAccountName" : "Office Rent",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 6000,
+    "NARAAccountNr" : 6521,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountName" : "Parking",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountName" : "Real Estate Taxes & Insurance",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6523,
+    "NARAAccountGroup" : 6000
+  },
+  {
+    "NARAAccountGroup" : 6000,
+    "NARAAccountName" : "Utilities Other Than Telephone",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 6525,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountName" : "Supplies Stationery & Printing",
+    "NARAAccountNr" : 7540,
+    "NARAAccountGroup" : 7000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 7000,
+    "NARAAccountName" : "Postage & Delivery",
+    "NARAAccountNr" : 7541,
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountGroup" : 7000,
+    "NARAAccountName" : "Library & Subscriptions",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 7542
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 7000,
+    "NARAAccountNr" : 7543,
+    "NARAAccountName" : "Telephone\/Communications"
+  },
+  {
+    "NARAAccountGroup" : 7000,
+    "NARAAccountName" : "Photocopy Expense",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 7545
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 7546,
+    "NARAAccountGroup" : 7000,
+    "NARAAccountName" : "Computer Equipment"
+  },
+  {
+    "NARAAccountGroup" : 8000,
+    "NARAAccountName" : "Travel & Related Expense",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 8570
+  },
+  {
+    "NARAAccountName" : "Professional Dues & CLE",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 8571,
+    "NARAAccountGroup" : 8000
+  },
+  {
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 8572,
+    "NARAAccountGroup" : 8000,
+    "NARAAccountName" : "Recruiting: Professional Staff"
+  },
+  {
+    "NARAAccountGroup" : 9000,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 9580,
+    "NARAAccountName" : "Insurance: Professional\/Other",
+    "NARACredit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountNr" : 9581,
+    "NARAAccountGroup" : 9000,
+    "NARAAccountName" : "Other Taxes and Similar Costs",
+    "NARADebit" : {
+      "moneyAmount" : 0
+    }
+  },
+  {
+    "NARAAccountName" : "Client Advances Written Off",
+    "NARAAccountNr" : 9582,
+    "NARADebit" : {
+      "moneyAmount" : 0
+    },
+    "NARACredit" : {
+      "moneyAmount" : 0
+    },
+    "NARAAccountGroup" : 9000
+  }
+]

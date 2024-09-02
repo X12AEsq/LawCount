@@ -252,6 +252,7 @@ class CVM: ObservableObject {
             let url = URL.documentsDirectory.appending(path: "NewGroups.json")
             let input = try Data(contentsOf: url)
             self.cvmNewGroup = try decoder.decode([NewAccountGroup].self, from: input)
+            self.cvmNewGroup = self.cvmNewGroup.sorted(by: { $0.NAGroupNr < $1.NAGroupNr } )
         } catch {
             print(error.localizedDescription)
         }
@@ -260,6 +261,7 @@ class CVM: ObservableObject {
             let url = URL.documentsDirectory.appending(path: "NewAccounts.json")
             let input = try Data(contentsOf: url)
             self.cvmNewAccount = try decoder.decode([NewAccountRecord].self, from: input)
+            self.cvmNewAccount = self.cvmNewAccount.sorted(by: { $0.NARAAccountNr < $1.NARAAccountNr } )
         } catch {
             print(error.localizedDescription)
         }

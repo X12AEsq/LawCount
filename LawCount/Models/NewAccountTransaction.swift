@@ -52,6 +52,8 @@ struct NewAccountTransaction: Codable, Hashable {
         pl += FormattingService.ljf(base: NATNum, len: 15)
         pl += " "
         pl += FormattingService.ljf(base: NATName, len: 25)
+        pl += " "
+        pl += NATProcessed ? "done " : "ready"
         return pl
     }
 }
