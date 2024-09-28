@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3119C86B2C7FF6DA0065AC66 /* CustomButton4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3119C86A2C7FF6DA0065AC66 /* CustomButton4.swift */; };
+		31209B902CA855DA00D0A29C /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31209B8F2CA855D100D0A29C /* PDFService.swift */; };
+		3157CA7A2C862D1F00EFF483 /* TransJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3157CA792C862D1F00EFF483 /* TransJournalView.swift */; };
 		3158E2122C767713008027FB /* InterimJournalTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3158E2112C767713008027FB /* InterimJournalTransaction.swift */; };
 		318130482C7AA7B10096E215 /* OneTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318130472C7AA7B10096E215 /* OneTransactionView.swift */; };
 		31A2853B2C7E79AC005953AB /* NewAccountGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A2853A2C7E79AC005953AB /* NewAccountGroup.swift */; };
@@ -17,6 +19,9 @@
 		31A666272C7F992600D54835 /* FullTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A666262C7F992600D54835 /* FullTransaction.swift */; };
 		31A8F4CA2C77970B00E14894 /* InterimChartofAccounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A8F4C92C77970B00E14894 /* InterimChartofAccounts.swift */; };
 		31A8F4CC2C77A59C00E14894 /* LawCountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A8F4CB2C77A59C00E14894 /* LawCountView.swift */; };
+		31BAFEE82CA86C2700316EA3 /* PDFShareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFEE72CA86C2700316EA3 /* PDFShareView.swift */; };
+		31BAFEEA2CA86CF500316EA3 /* PDFViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFEE92CA86CF500316EA3 /* PDFViewer.swift */; };
+		31BAFEEC2CA86D6400316EA3 /* PDFKitRepresentedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31BAFEEB2CA86D6400316EA3 /* PDFKitRepresentedView.swift */; };
 		31C19A382C7A32A700D179D9 /* SelectTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C19A372C7A32A700D179D9 /* SelectTransactionView.swift */; };
 		31C762792C77F71A004385E8 /* DocumentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C762782C77F71A004385E8 /* DocumentsView.swift */; };
 		31C7627E2C77F7B2004385E8 /* CustomButton1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31C7627B2C77F7B2004385E8 /* CustomButton1.swift */; };
@@ -49,6 +54,8 @@
 
 /* Begin PBXFileReference section */
 		3119C86A2C7FF6DA0065AC66 /* CustomButton4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton4.swift; sourceTree = "<group>"; };
+		31209B8F2CA855D100D0A29C /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
+		3157CA792C862D1F00EFF483 /* TransJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransJournalView.swift; sourceTree = "<group>"; };
 		3158E2112C767713008027FB /* InterimJournalTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterimJournalTransaction.swift; sourceTree = "<group>"; };
 		318130472C7AA7B10096E215 /* OneTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTransactionView.swift; sourceTree = "<group>"; };
 		31A2853A2C7E79AC005953AB /* NewAccountGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewAccountGroup.swift; sourceTree = "<group>"; };
@@ -58,6 +65,9 @@
 		31A666262C7F992600D54835 /* FullTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullTransaction.swift; sourceTree = "<group>"; };
 		31A8F4C92C77970B00E14894 /* InterimChartofAccounts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterimChartofAccounts.swift; sourceTree = "<group>"; };
 		31A8F4CB2C77A59C00E14894 /* LawCountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LawCountView.swift; sourceTree = "<group>"; };
+		31BAFEE72CA86C2700316EA3 /* PDFShareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFShareView.swift; sourceTree = "<group>"; };
+		31BAFEE92CA86CF500316EA3 /* PDFViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFViewer.swift; sourceTree = "<group>"; };
+		31BAFEEB2CA86D6400316EA3 /* PDFKitRepresentedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFKitRepresentedView.swift; sourceTree = "<group>"; };
 		31C19A372C7A32A700D179D9 /* SelectTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectTransactionView.swift; sourceTree = "<group>"; };
 		31C762782C77F71A004385E8 /* DocumentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentsView.swift; sourceTree = "<group>"; };
 		31C7627B2C77F7B2004385E8 /* CustomButton1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomButton1.swift; sourceTree = "<group>"; };
@@ -101,6 +111,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31BAFEE62CA86C0F00316EA3 /* PDFViews */ = {
+			isa = PBXGroup;
+			children = (
+				31BAFEE72CA86C2700316EA3 /* PDFShareView.swift */,
+				31BAFEE92CA86CF500316EA3 /* PDFViewer.swift */,
+				31BAFEEB2CA86D6400316EA3 /* PDFKitRepresentedView.swift */,
+			);
+			path = PDFViews;
+			sourceTree = "<group>";
+		};
 		31C7627A2C77F78B004385E8 /* Customizations */ = {
 			isa = PBXGroup;
 			children = (
@@ -117,6 +137,7 @@
 		31C7674E2C7947A0007D5100 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				31209B8F2CA855D100D0A29C /* PDFService.swift */,
 				31C7674F2C7947BB007D5100 /* DateService.swift */,
 				31C767502C7947BB007D5100 /* FormattingService.swift */,
 			);
@@ -198,6 +219,7 @@
 		31EEA7602C77CD56003BCBFA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				31BAFEE62CA86C0F00316EA3 /* PDFViews */,
 				31A8F4CB2C77A59C00E14894 /* LawCountView.swift */,
 				31C762782C77F71A004385E8 /* DocumentsView.swift */,
 				31C762812C7806E6004385E8 /* ListTransactionsView.swift */,
@@ -207,6 +229,7 @@
 				318130472C7AA7B10096E215 /* OneTransactionView.swift */,
 				31CE1EE42C7B7DF100631B22 /* ListAccountsView.swift */,
 				31CE1EE62C7B8E7400631B22 /* OneGroupView.swift */,
+				3157CA792C862D1F00EFF483 /* TransJournalView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,7 +262,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1600;
 				TargetAttributes = {
 					31E7976C2C761FAE00B5A8B8 = {
 						CreatedOnToolsVersion = 15.4;
@@ -293,14 +316,19 @@
 				31A8F4CA2C77970B00E14894 /* InterimChartofAccounts.swift in Sources */,
 				31D371252C765B100090D6FB /* InterimJournalExtract.swift in Sources */,
 				31C767522C7947BB007D5100 /* FormattingService.swift in Sources */,
+				31BAFEEA2CA86CF500316EA3 /* PDFViewer.swift in Sources */,
 				31A2853D2C7E7A85005953AB /* NewAccountRecord.swift in Sources */,
+				31209B902CA855DA00D0A29C /* PDFService.swift in Sources */,
 				3119C86B2C7FF6DA0065AC66 /* CustomButton4.swift in Sources */,
 				31D371212C76590C0090D6FB /* Money.swift in Sources */,
 				31C7627E2C77F7B2004385E8 /* CustomButton1.swift in Sources */,
 				31C762822C7806E6004385E8 /* ListTransactionsView.swift in Sources */,
 				31C762792C77F71A004385E8 /* DocumentsView.swift in Sources */,
 				3158E2122C767713008027FB /* InterimJournalTransaction.swift in Sources */,
+				31BAFEEC2CA86D6400316EA3 /* PDFKitRepresentedView.swift in Sources */,
 				31A2853B2C7E79AC005953AB /* NewAccountGroup.swift in Sources */,
+				3157CA7A2C862D1F00EFF483 /* TransJournalView.swift in Sources */,
+				31BAFEE82CA86C2700316EA3 /* PDFShareView.swift in Sources */,
 				31D3711F2C7654610090D6FB /* CVM.swift in Sources */,
 				31A2853F2C7E7BF1005953AB /* NewAccountTransaction.swift in Sources */,
 				31D371272C765B410090D6FB /* ConvAcctNumber.swift in Sources */,
@@ -357,6 +385,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -418,6 +447,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -445,6 +475,7 @@
 				CODE_SIGN_ENTITLEMENTS = LawCount/LawCount.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawCount/Preview Content\"";
 				DEVELOPMENT_TEAM = 7W35AZ9EHX;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -469,6 +500,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -483,6 +515,7 @@
 				CODE_SIGN_ENTITLEMENTS = LawCount/LawCount.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"LawCount/Preview Content\"";
 				DEVELOPMENT_TEAM = 7W35AZ9EHX;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -507,6 +540,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

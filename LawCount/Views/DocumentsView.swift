@@ -33,6 +33,12 @@ struct DocumentsView: View {
                 }
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
+                HStack {
+                    NavigationLink("Journal", value: "TransactionJournal")
+                    Spacer()
+                }
+                .padding(.leading, 20)
+                .padding(.bottom, 20)
                 Spacer()
             }
         }.onAppear(perform: {

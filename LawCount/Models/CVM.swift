@@ -52,6 +52,10 @@ class CVM: ObservableObject {
         return selectedPractice() + " " + mod
     }
     
+    func shortModuleTitle() -> String {
+        return selectedPractice()
+    }
+    
     func retrieveAccount(acctNr: Int) -> (status:Int, acct:NewAccountRecord, acctName:String, acctOffset:Int) {
         struct acctInfo {
             var acct:NewAccountRecord = NewAccountRecord()

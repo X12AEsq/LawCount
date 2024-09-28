@@ -96,6 +96,8 @@ struct ContentView: View {
                     DocumentsView()
                 case "ListTransactions":
                     ListTransactionsView()
+                case "TransactionJournal":
+                    TransJournalView()
                 case "TransactionMenu":
                     SelectTransactionView()
                 case "ListAccounts":
