@@ -25,18 +25,21 @@ struct DocumentsView: View {
                     NavigationLink("List Transactions", value: "ListTransactions")
                     Spacer()
                 }
+                .font(.system(size: 20))
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
                 HStack {
                     NavigationLink("List Accounts", value: "ListAccounts")
                     Spacer()
                 }
+                .font(.system(size: 20))
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
                 HStack {
                     NavigationLink("Journal", value: "TransactionJournal")
                     Spacer()
                 }
+                .font(.system(size: 20))
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
                 Spacer()

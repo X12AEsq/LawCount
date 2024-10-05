@@ -66,7 +66,24 @@ struct PDFService {
         }
     }
     
-    
+    public static func checkNewPage(pageWidth: CGFloat, pageHeight: CGFloat, margin: CGFloat, pageCount: Int, currentY: CGFloat, context: UIGraphicsPDFRendererContext, header:String, header2:String) -> (pageCount:Int, currentY: CGFloat) {
+        var workPageCount = pageCount
+        var workCurrentY = currentY
+        let nextY = currentY + 100
+        if nextY > pageHeight {
+            workPageCount += 1
+            context.beginPage()
+            
+            if let watermark = UIImage(named: "AlbersMorrisLOGO copy") {
+                PDFService.addImage(pageRect: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight), image: watermark)
+            }
+            
+            // Draw table headers
+            workCurrentY = PDFService.drawPageHeader(at: CGPoint(x: margin, y: margin), pageWidth: pageWidth, header: header, header2: header2)
+        }
+        return(workPageCount, workCurrentY)
+    }
+
 
 }
 

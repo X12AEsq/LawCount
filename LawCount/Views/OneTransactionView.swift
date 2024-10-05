@@ -261,6 +261,12 @@ struct OneTransactionView: View {
                 changeIndicator = true
                 continue
             }
+            if modTRX.ftxSegs[i].NTSAccountName == "Postage and Delivery" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7541
+                modTRX.ftxSegs[i].NTSAccountName = "Postage & Delivery"
+                changeIndicator = true
+                continue
+            }
             if modTRX.ftxSegs[i].NTSAccountName == "Taxes:Taxes-Texas Professional" {
                 modTRX.ftxSegs[i].NTSAccountNr = 9581
                 modTRX.ftxSegs[i].NTSAccountName = "Other Taxes and Similar Costs"

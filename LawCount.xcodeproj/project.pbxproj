@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3119C86B2C7FF6DA0065AC66 /* CustomButton4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3119C86A2C7FF6DA0065AC66 /* CustomButton4.swift */; };
 		31209B902CA855DA00D0A29C /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31209B8F2CA855D100D0A29C /* PDFService.swift */; };
+		3149E7FD2CA9C16F006E47DB /* PDFParms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3149E7FC2CA9C16F006E47DB /* PDFParms.swift */; };
 		3157CA7A2C862D1F00EFF483 /* TransJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3157CA792C862D1F00EFF483 /* TransJournalView.swift */; };
 		3158E2122C767713008027FB /* InterimJournalTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3158E2112C767713008027FB /* InterimJournalTransaction.swift */; };
 		318130482C7AA7B10096E215 /* OneTransactionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 318130472C7AA7B10096E215 /* OneTransactionView.swift */; };
@@ -55,6 +56,7 @@
 /* Begin PBXFileReference section */
 		3119C86A2C7FF6DA0065AC66 /* CustomButton4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton4.swift; sourceTree = "<group>"; };
 		31209B8F2CA855D100D0A29C /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
+		3149E7FC2CA9C16F006E47DB /* PDFParms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFParms.swift; sourceTree = "<group>"; };
 		3157CA792C862D1F00EFF483 /* TransJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransJournalView.swift; sourceTree = "<group>"; };
 		3158E2112C767713008027FB /* InterimJournalTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterimJournalTransaction.swift; sourceTree = "<group>"; };
 		318130472C7AA7B10096E215 /* OneTransactionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneTransactionView.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 		31C7627A2C77F78B004385E8 /* Customizations */ = {
 			isa = PBXGroup;
 			children = (
+				3149E7FC2CA9C16F006E47DB /* PDFParms.swift */,
 				31C7627C2C77F7B2004385E8 /* CustomButton.swift */,
 				31C7627B2C77F7B2004385E8 /* CustomButton1.swift */,
 				31C7627D2C77F7B2004385E8 /* CustomButton2.swift */,
@@ -222,11 +225,11 @@
 				31BAFEE62CA86C0F00316EA3 /* PDFViews */,
 				31A8F4CB2C77A59C00E14894 /* LawCountView.swift */,
 				31C762782C77F71A004385E8 /* DocumentsView.swift */,
-				31C762812C7806E6004385E8 /* ListTransactionsView.swift */,
 				31F6318A2C78FD1100F5A82D /* NavigationStateManager.swift */,
 				31F6318C2C792C0500F5A82D /* ListDocumentsView.swift */,
 				31C19A372C7A32A700D179D9 /* SelectTransactionView.swift */,
 				318130472C7AA7B10096E215 /* OneTransactionView.swift */,
+				31C762812C7806E6004385E8 /* ListTransactionsView.swift */,
 				31CE1EE42C7B7DF100631B22 /* ListAccountsView.swift */,
 				31CE1EE62C7B8E7400631B22 /* OneGroupView.swift */,
 				3157CA792C862D1F00EFF483 /* TransJournalView.swift */,
@@ -315,6 +318,7 @@
 				31F6318D2C792C0500F5A82D /* ListDocumentsView.swift in Sources */,
 				31A8F4CA2C77970B00E14894 /* InterimChartofAccounts.swift in Sources */,
 				31D371252C765B100090D6FB /* InterimJournalExtract.swift in Sources */,
+				3149E7FD2CA9C16F006E47DB /* PDFParms.swift in Sources */,
 				31C767522C7947BB007D5100 /* FormattingService.swift in Sources */,
 				31BAFEEA2CA86CF500316EA3 /* PDFViewer.swift in Sources */,
 				31A2853D2C7E7A85005953AB /* NewAccountRecord.swift in Sources */,

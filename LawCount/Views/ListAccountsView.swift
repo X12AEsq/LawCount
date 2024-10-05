@@ -132,11 +132,8 @@ struct ListAccountsView: View {
         let pageHeight: CGFloat = 792
         let margin: CGFloat = 50
         let contentWidth = pageWidth - 2 * margin
-//        let rowHeight: CGFloat = 40
-//        let columnWidth: CGFloat = contentWidth / 3
         var pageCount:Int = 0
         var currentY: CGFloat = pageHeight
-        var tl:String = ""
         var totalCredit:Money = Money()
         var totalDebit:Money = Money()
 
@@ -153,21 +150,17 @@ struct ListAccountsView: View {
                     let nextPageResult = checkNewPage(pageWidth: pageWidth, pageHeight: pageHeight, margin: margin, pageCount: pageCount, currentY: currentY, context: context)
                     currentY = nextPageResult.currentY
                     pageCount = nextPageResult.pageCount
-//                    let nextY = currentY + 100
-//                    if nextY > pageHeight {
-//                        pageCount += 1
-//                        context.beginPage()
-//                        
-//                        if let watermark = UIImage(named: "AlbersMorrisLOGO copy") {
-//                            PDFService.addImage(pageRect: CGRect(x: 0, y: 0, width: pageWidth, height: pageHeight), image: watermark)
-//                        }
-//                        
-//                        // Draw table headers
-//                        currentY = PDFService.drawPageHeader(at: CGPoint(x: margin, y: margin), pageWidth: pageWidth, header: cvmInstance.shortModuleTitle(), header2: "List Accounts")
-//                    }
                     currentY = drawAccountLine(NAR:NAR, at: CGPoint(x: margin, y: currentY), pageWidth: contentWidth + margin)
+                    totalDebit = totalDebit + NAR.NARADebit
+                    totalCredit = totalCredit + NAR.NARACredit
                 }
             }
+            
+            let nextPageResult = checkNewPage(pageWidth: pageWidth, pageHeight: pageHeight, margin: margin, pageCount: pageCount, currentY: currentY, context: context)
+            currentY = nextPageResult.currentY
+            pageCount = nextPageResult.pageCount
+            drawTotalsLine(Debit: totalDebit, Credit: totalCredit, at: CGPoint(x: margin, y: currentY), pageWidth: contentWidth + margin)
+
         }
         return data
     }
@@ -185,7 +178,7 @@ struct ListAccountsView: View {
             }
             
             // Draw table headers
-            workCurrentY = PDFService.drawPageHeader(at: CGPoint(x: margin, y: margin), pageWidth: pageWidth, header: cvmInstance.shortModuleTitle(), header2: "List Accounts")
+            workCurrentY = PDFService.drawPageHeader(at: CGPoint(x: margin, y: margin), pageWidth: pageWidth, header: cvmInstance.shortModuleTitle(), header2: "List Accounts " + DateService.dateDate2String(inDate: Date(), short: false))
         }
         return(workPageCount, workCurrentY)
     }
@@ -197,22 +190,40 @@ struct ListAccountsView: View {
         let alphaStyle = NSMutableParagraphStyle()
         numericStyle.alignment = .right
         alphaStyle.alignment = .left
+        let leftOffset: CGFloat = 15
         let interField:CGFloat = 5
-
+        let DebitX:CGFloat = origin.x + leftOffset + 50 + interField + 200 + interField
+        let CreditX:CGFloat = DebitX + 100 + interField
+        var nextX:CGFloat = origin.x
         let numericAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
             .paragraphStyle: numericStyle
         ]
-        
         let alphaAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
             .paragraphStyle: alphaStyle
         ]
-        
         let acctNRWidth: CGFloat = 50
-        let acctNRRect = CGRect(x: origin.x, y: rowStart, width: acctNRWidth, height: rowHeight)
+        let acctNRRect = CGRect(x: nextX, y: rowStart, width: acctNRWidth, height: rowHeight)
         let acctNRString = NSAttributedString(string: String(FormattingService.rjf(base: String(NAG.NAGroupNr), len: 5, zeroFill: true)), attributes: numericAttributes)
         acctNRString.draw(in: acctNRRect)
+        nextX += acctNRWidth + interField
+        
+        let acctGrpNameWidth: CGFloat = 200
+        let acctGrpNameRect = CGRect(x: nextX, y: rowStart, width: acctGrpNameWidth, height: rowHeight)
+        let acctGrpNameString = NSAttributedString(string: NAG.NAGroupName, attributes: alphaAttributes)
+        acctGrpNameString.draw(in: acctGrpNameRect)
+
+        let acctDebitWidth: CGFloat = 100
+        let acctDebitRect = CGRect(x: DebitX, y: rowStart, width: acctDebitWidth, height: rowHeight)
+        let acctDebitString = NSAttributedString(string: "Debits", attributes: numericAttributes)
+        acctDebitString.draw(in: acctDebitRect)
+        
+        let acctCreditWidth: CGFloat = 100
+        let acctCreditRect = CGRect(x: CreditX, y: rowStart, width: acctCreditWidth, height: rowHeight)
+        let acctCreditString = NSAttributedString(string: "Credits", attributes: numericAttributes)
+        acctCreditString.draw(in: acctCreditRect)
+
         return origin.y + 25
     }
     
@@ -225,23 +236,69 @@ struct ListAccountsView: View {
         numericStyle.alignment = .right
         alphaStyle.alignment = .left
         let interField:CGFloat = 5
-
+        var nextX:CGFloat = origin.x + leftOffset
         let numericAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
             .paragraphStyle: numericStyle
         ]
-        
         let alphaAttributes: [NSAttributedString.Key: Any] = [
             .font: UIFont.systemFont(ofSize: 12),
             .paragraphStyle: alphaStyle
         ]
         
         let acctNRWidth: CGFloat = 50
-        let acctNRRect = CGRect(x: origin.x + leftOffset, y: rowStart, width: acctNRWidth, height: rowHeight)
+        let acctNRRect = CGRect(x: nextX, y: rowStart, width: acctNRWidth, height: rowHeight)
         let acctNRString = NSAttributedString(string: String(FormattingService.rjf(base: String(NAR.NARAAccountNr), len: 5, zeroFill: true)), attributes: numericAttributes)
         acctNRString.draw(in: acctNRRect)
+        nextX += acctNRWidth + interField
+        
+        let acctNameWidth: CGFloat = 200
+        let acctNameRect = CGRect(x: nextX, y: rowStart, width: acctNameWidth, height: rowHeight)
+        let acctNameString = NSAttributedString(string: NAR.NARAAccountName, attributes: alphaAttributes)
+        acctNameString.draw(in: acctNameRect)
+        nextX += acctNameWidth + interField
+        
+        let acctDebitWidth: CGFloat = 100
+        let acctDebitRect = CGRect(x: nextX, y: rowStart, width: acctDebitWidth, height: rowHeight)
+        let acctDebitString = NSAttributedString(string: NAR.NARADebit.rawMoney11, attributes: numericAttributes)
+        acctDebitString.draw(in: acctDebitRect)
+        nextX += acctDebitWidth + interField
+        
+        let acctCreditWidth: CGFloat = 100
+        let acctCreditRect = CGRect(x: nextX, y: rowStart, width: acctCreditWidth, height: rowHeight)
+        let acctCreditString = NSAttributedString(string: NAR.NARACredit.rawMoney11, attributes: numericAttributes)
+        acctCreditString.draw(in: acctCreditRect)
+        nextX += acctCreditWidth + interField
+
         return origin.y + 15
     }
+    
+    func drawTotalsLine(Debit: Money, Credit: Money, at origin: CGPoint, pageWidth: CGFloat) {
+        let rowHeight: CGFloat = 14
+        let rowStart: CGFloat = origin.y + rowHeight + 30
+        let leftOffset: CGFloat = 15
+        let numericStyle = NSMutableParagraphStyle()
+        numericStyle.alignment = .right
+        let interField:CGFloat = 5
+        let DebitX:CGFloat = origin.x + leftOffset + 50 + interField + 200 + interField
+        let CreditX:CGFloat = DebitX + 100 + interField
+        
+        let numericAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 12),
+            .paragraphStyle: numericStyle
+        ]
+                
+        let acctDebitWidth: CGFloat = 100
+        let acctDebitRect = CGRect(x: DebitX, y: rowStart, width: acctDebitWidth, height: rowHeight)
+        let acctDebitString = NSAttributedString(string: Debit.rawMoney11, attributes: numericAttributes)
+        acctDebitString.draw(in: acctDebitRect)
+        
+        let acctCreditWidth: CGFloat = 100
+        let acctCreditRect = CGRect(x: CreditX, y: rowStart, width: acctCreditWidth, height: rowHeight)
+        let acctCreditString = NSAttributedString(string: Credit.rawMoney11, attributes: numericAttributes)
+        acctCreditString.draw(in: acctCreditRect)
+    }
+
 }
 
 

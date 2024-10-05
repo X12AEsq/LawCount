@@ -33,6 +33,7 @@ struct ContentView: View {
                     NavigationLink("Documents", value: "DocumentMenu")
                     Spacer()
                 }
+                .font(.system(size: 20))
                 .padding(.leading, 20)
                 .padding(.bottom, 5)
 
@@ -40,6 +41,7 @@ struct ContentView: View {
                     NavigationLink("Transactions", value: "TransactionMenu")
                     Spacer()
                 }
+                .font(.system(size: 20))
                 .padding(.leading, 20)
                 .padding(.bottom, 5)
                 Spacer()

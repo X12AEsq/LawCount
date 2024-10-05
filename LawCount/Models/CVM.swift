@@ -21,7 +21,11 @@ class CVM: ObservableObject {
     var cvmNewSegments:[NewTransactionSegment] = []
     var cvmNewGroup:[NewAccountGroup] = []
     var cvmNewAccount:[NewAccountRecord] = []
-    
+/*
+    var cvmWorkNewAccount:[NewAccountRecord] = []
+    var cvmWorkNewTrans:[NewAccountTransaction] = []
+    var cvmWorkNewSegments:[NewTransactionSegment] = []
+*/
     init(cvmTransactions: [IJTrans], cvmCOA: ICAChartOfAccounts) {
         self.cvmTransactions = cvmTransactions
         self.cvmCOA = cvmCOA
@@ -56,6 +60,36 @@ class CVM: ObservableObject {
         return selectedPractice()
     }
     
+    func debitAccount(acctNr: Int, amount:Money) {
+        let candidates:[NewAccountRecord] = self.cvmNewAccount.filter( { $0.NARAAccountNr == acctNr } )
+        if candidates.count == 1 {
+            let limit = self.cvmNewAccount.count
+            var i = 0
+            while i < limit {
+                if self.cvmNewAccount[i].NARAAccountNr == acctNr {
+                    self.cvmNewAccount[i].NARADebit = self.cvmNewAccount[i].NARADebit + amount
+                    return
+                }
+                i += 1
+            }
+        }
+    }
+    
+    func creditAccount(acctNr: Int, amount:Money) {
+        let candidates:[NewAccountRecord] = self.cvmNewAccount.filter( { $0.NARAAccountNr == acctNr } )
+        if candidates.count == 1 {
+            let limit = self.cvmNewAccount.count
+            var i = 0
+            while i < limit {
+                if self.cvmNewAccount[i].NARAAccountNr == acctNr {
+                    self.cvmNewAccount[i].NARACredit = self.cvmNewAccount[i].NARACredit + amount
+                    return
+                }
+                i += 1
+            }
+        }
+    }
+
     func retrieveAccount(acctNr: Int) -> (status:Int, acct:NewAccountRecord, acctName:String, acctOffset:Int) {
         struct acctInfo {
             var acct:NewAccountRecord = NewAccountRecord()
@@ -835,5 +869,47 @@ class CVM: ObservableObject {
         NARAccount.NARAAccountName = "Client Advances Written Off"
         cvmNewAccount.append(NARAccount)
     }
+/*
+    func debitWorkAccount(acctNr:Int, debit:Money) -> (status:Int, placeHolder:String) {
+        let acctSub:Int = self.findWorkAccount(acctNr: acctNr)
+        if acctSub < 0 { return (status:acctSub, placeHolder:" ") }
+        self.cvmWorkNewAccount[acctSub].NARADebit = self.cvmWorkNewAccount[acctSub].NARADebit + debit
+        return (status:acctSub, placeHolder:" ")
+    }
+    
+    func creditWorkAccount(acctNr:Int, credit:Money) -> (status:Int, placeHolder:String) {
+        let acctSub:Int = self.findWorkAccount(acctNr: acctNr)
+        if acctSub < 0 { return (status:acctSub, placeHolder:" ") }
+        self.cvmWorkNewAccount[acctSub].NARACredit = self.cvmWorkNewAccount[acctSub].NARACredit + credit
+        return (status:acctSub, placeHolder:" ")
+    }
+    
+    func addWorkAccount(acctNr:Int, acctDescr:String, acctGroup:Int) {
+        if self.findWorkAccount(acctNr: acctNr) < 0 {
+            let workAccount:NewAccountRecord = NewAccountRecord(NARAAccountNr: acctNr, NARAAccountName: acctDescr, NARAAccountGroup: acctGroup, NARADebit: Money(), NARACredit: Money())
+            self.cvmWorkNewAccount.append(workAccount)
+        }
+    }
+    
+    func getNextWorkAccount(lastAcct:Int) -> (status:Int, nar:NewAccountRecord) {
+        let tempWorkAccounts:[NewAccountRecord] = self.cvmNewAccount.filter( { $0.NARAAccountNr > lastAcct } ).sorted(by: { $0.NARAAccountNr < $1.NARAAccountNr } )
+        if tempWorkAccounts.count > 0 {
+            return(status:0, nar:tempWorkAccounts[0])
+        } else {
+            return(status:-1, nar:NewAccountRecord())
+        }
+    }
+    
+    func transUpToDate(limitDate:Date) {
+        
+    }
+
+    private func findWorkAccount(acctNr:Int) -> Int {
+        for i in 0 ... self.cvmWorkNewAccount.count - 1 {
+            if self.cvmWorkNewAccount[i].NARAAccountNr == acctNr { return i }
+        }
+        return -1
+    }
+*/
 }
 
