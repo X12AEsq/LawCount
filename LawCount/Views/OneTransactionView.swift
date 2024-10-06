@@ -273,6 +273,42 @@ struct OneTransactionView: View {
                 changeIndicator = true
                 continue
             }
+            if modTRX.ftxSegs[i].NTSAccountName == "Meals and Entertainment" {
+                modTRX.ftxSegs[i].NTSAccountNr = 8570
+                modTRX.ftxSegs[i].NTSAccountName = "Travel & Related Expense"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Utilities" {
+                modTRX.ftxSegs[i].NTSAccountNr = 6525
+                modTRX.ftxSegs[i].NTSAccountName = "Utilities Other Than Telephone"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Telephone Expense:LandLine" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7543
+                modTRX.ftxSegs[i].NTSAccountName = "Telephone-Communications"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Advertising and Promotion" {
+                modTRX.ftxSegs[i].NTSAccountNr = 6526
+                modTRX.ftxSegs[i].NTSAccountName = "Advertising"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Professional Fees" {
+                modTRX.ftxSegs[i].NTSAccountNr = 9583
+                modTRX.ftxSegs[i].NTSAccountName = "Professional Fees"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Office Supplies" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7540
+                modTRX.ftxSegs[i].NTSAccountName = "Supplies Stationery & Printing"
+                changeIndicator = true
+                continue
+            }
         }
     }
         
