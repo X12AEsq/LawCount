@@ -309,6 +309,42 @@ struct OneTransactionView: View {
                 changeIndicator = true
                 continue
             }
+            if modTRX.ftxSegs[i].NTSAccountName == "Research Services" {
+                modTRX.ftxSegs[i].NTSAccountNr = 9584
+                modTRX.ftxSegs[i].NTSAccountName = "Research Services"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Repairs and Maintenance" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7547
+                modTRX.ftxSegs[i].NTSAccountName = "Repairs & Maintenance"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Computer and Internet Expenses" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7548
+                modTRX.ftxSegs[i].NTSAccountName = "Computer & Internet"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Petty Cash" {
+                modTRX.ftxSegs[i].NTSAccountNr = 1109
+                modTRX.ftxSegs[i].NTSAccountName = "Petty Cash"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Bank Service Charges" {
+                modTRX.ftxSegs[i].NTSAccountNr = 9585
+                modTRX.ftxSegs[i].NTSAccountName = "Bank Service Charges"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Reimbursement Owed:Owed to Linda Personally" {
+                modTRX.ftxSegs[i].NTSAccountNr = 4320
+                modTRX.ftxSegs[i].NTSAccountName = "Equity Account: Linda"
+                changeIndicator = true
+                continue
+            }
         }
     }
         

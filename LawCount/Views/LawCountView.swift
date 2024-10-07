@@ -29,7 +29,7 @@ struct LawCountView: View {
                         print("below push")
                     } label: {
                         Text(" Documents ")
-                        //                            .font(.system(size: 30))
+//                            .font(.system(size: 30))
                     }
                     .buttonStyle(CustomButton2())
                     Spacer()
@@ -40,7 +40,7 @@ struct LawCountView: View {
                     Button {
                         router.push(.Client)
                     } label: {
-                        Text(" Accounts: \(acctCount) ")
+                        Text(" Accounts: \(cvmInstance.accountCount()) ")
                         //                            .font(.system(size: 30))
                     }
                     .buttonStyle(CustomButton2())
@@ -48,14 +48,20 @@ struct LawCountView: View {
                 }
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
+//                .onAppear() {
+//                    acctCount = cvmInstance.accountCount()
+//                }
                 HStack {
                     Button {
                         router.push(.Cause)
                     } label: {
-                        Text(" Transactions: \(transCount) ")
+                        Text(" Transactions: \(cvmInstance.cvmTransactions.count) ")
                             .font(.system(size: 20))
                     }
                     .buttonStyle(CustomButton2())
+//                    .onAppear() {
+//                        transCount = cvmInstance.cvmTransactions.count
+//                    }
                     Spacer()
                 }
                 .padding(.leading, 20)
@@ -76,6 +82,10 @@ struct LawCountView: View {
                 .padding(.bottom, 20)
             }
         }
+//        .onAppear() {
+//            acctCount = cvmInstance.accountCount()
+//            transCount = cvmInstance.cvmTransactions.count
+//        }
     }
 }
 
