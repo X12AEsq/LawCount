@@ -345,6 +345,42 @@ struct OneTransactionView: View {
                 changeIndicator = true
                 continue
             }
+            if modTRX.ftxSegs[i].NTSAccountName == "NBT Commercial Master Card" {
+                modTRX.ftxSegs[i].NTSAccountNr = 2231
+                modTRX.ftxSegs[i].NTSAccountName = "NBT MasterCard"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Accounts Receivable" {
+                modTRX.ftxSegs[i].NTSAccountNr = 1140
+                modTRX.ftxSegs[i].NTSAccountName = "Other Receivables Deposits etc."
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Legal Fee Income" {
+                modTRX.ftxSegs[i].NTSAccountNr = 5400
+                modTRX.ftxSegs[i].NTSAccountName = "Fees: Income from Clients"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Undeposited Funds" {
+                modTRX.ftxSegs[i].NTSAccountNr = 2232
+                modTRX.ftxSegs[i].NTSAccountName = "Undeposited Funds"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Continuing Education" {
+                modTRX.ftxSegs[i].NTSAccountNr = 8571
+                modTRX.ftxSegs[i].NTSAccountName = "Professional Dues & CLE"
+                changeIndicator = true
+                continue
+            }
+            if modTRX.ftxSegs[i].NTSAccountName == "Printing and Reproduction" {
+                modTRX.ftxSegs[i].NTSAccountNr = 7545
+                modTRX.ftxSegs[i].NTSAccountName = "Photocopy Expense"
+                changeIndicator = true
+                continue
+            }
         }
     }
         

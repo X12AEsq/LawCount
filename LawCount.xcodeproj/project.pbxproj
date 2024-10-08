@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3119C86B2C7FF6DA0065AC66 /* CustomButton4.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3119C86A2C7FF6DA0065AC66 /* CustomButton4.swift */; };
 		31209B902CA855DA00D0A29C /* PDFService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31209B8F2CA855D100D0A29C /* PDFService.swift */; };
+		31360F882CB57A930022D2B3 /* SDNewAccountGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31360F872CB57A7D0022D2B3 /* SDNewAccountGroup.swift */; };
+		31360F8A2CB57B400022D2B3 /* SDNewAccountRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31360F892CB57B3A0022D2B3 /* SDNewAccountRecord.swift */; };
+		31360F8C2CB582070022D2B3 /* SDSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31360F8B2CB582020022D2B3 /* SDSystem.swift */; };
 		3149E7FD2CA9C16F006E47DB /* PDFParms.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3149E7FC2CA9C16F006E47DB /* PDFParms.swift */; };
 		3157CA7A2C862D1F00EFF483 /* TransJournalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3157CA792C862D1F00EFF483 /* TransJournalView.swift */; };
 		3158E2122C767713008027FB /* InterimJournalTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3158E2112C767713008027FB /* InterimJournalTransaction.swift */; };
@@ -56,6 +59,9 @@
 /* Begin PBXFileReference section */
 		3119C86A2C7FF6DA0065AC66 /* CustomButton4.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton4.swift; sourceTree = "<group>"; };
 		31209B8F2CA855D100D0A29C /* PDFService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFService.swift; sourceTree = "<group>"; };
+		31360F872CB57A7D0022D2B3 /* SDNewAccountGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDNewAccountGroup.swift; sourceTree = "<group>"; };
+		31360F892CB57B3A0022D2B3 /* SDNewAccountRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDNewAccountRecord.swift; sourceTree = "<group>"; };
+		31360F8B2CB582020022D2B3 /* SDSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDSystem.swift; sourceTree = "<group>"; };
 		3149E7FC2CA9C16F006E47DB /* PDFParms.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFParms.swift; sourceTree = "<group>"; };
 		3157CA792C862D1F00EFF483 /* TransJournalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransJournalView.swift; sourceTree = "<group>"; };
 		3158E2112C767713008027FB /* InterimJournalTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterimJournalTransaction.swift; sourceTree = "<group>"; };
@@ -113,6 +119,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		31360F862CB57A050022D2B3 /* SwiftDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				31360F8B2CB582020022D2B3 /* SDSystem.swift */,
+				31360F892CB57B3A0022D2B3 /* SDNewAccountRecord.swift */,
+				31360F872CB57A7D0022D2B3 /* SDNewAccountGroup.swift */,
+			);
+			path = SwiftDataModels;
+			sourceTree = "<group>";
+		};
 		31BAFEE62CA86C0F00316EA3 /* PDFViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,6 +194,7 @@
 				31C7627A2C77F78B004385E8 /* Customizations */,
 				31EEA7602C77CD56003BCBFA /* Views */,
 				31D3711B2C7653E50090D6FB /* InputData */,
+				31360F862CB57A050022D2B3 /* SwiftDataModels */,
 				31E797812C7620F900B5A8B8 /* Models */,
 				31E797702C761FAE00B5A8B8 /* LawCountApp.swift */,
 				31E797722C761FAE00B5A8B8 /* ContentView.swift */,
@@ -324,6 +341,7 @@
 				31A2853D2C7E7A85005953AB /* NewAccountRecord.swift in Sources */,
 				31209B902CA855DA00D0A29C /* PDFService.swift in Sources */,
 				3119C86B2C7FF6DA0065AC66 /* CustomButton4.swift in Sources */,
+				31360F882CB57A930022D2B3 /* SDNewAccountGroup.swift in Sources */,
 				31D371212C76590C0090D6FB /* Money.swift in Sources */,
 				31C7627E2C77F7B2004385E8 /* CustomButton1.swift in Sources */,
 				31C762822C7806E6004385E8 /* ListTransactionsView.swift in Sources */,
@@ -339,10 +357,12 @@
 				31E797752C761FAE00B5A8B8 /* Item.swift in Sources */,
 				31C767512C7947BB007D5100 /* DateService.swift in Sources */,
 				31EEA75F2C77C8F1003BCBFA /* Router.swift in Sources */,
+				31360F8A2CB57B400022D2B3 /* SDNewAccountRecord.swift in Sources */,
 				31C7627F2C77F7B2004385E8 /* CustomButton.swift in Sources */,
 				31A666272C7F992600D54835 /* FullTransaction.swift in Sources */,
 				31E797712C761FAE00B5A8B8 /* LawCountApp.swift in Sources */,
 				31CE1EE52C7B7DF100631B22 /* ListAccountsView.swift in Sources */,
+				31360F8C2CB582070022D2B3 /* SDSystem.swift in Sources */,
 				318130482C7AA7B10096E215 /* OneTransactionView.swift in Sources */,
 				31E797872C76225200B5A8B8 /* AccountNumber.swift in Sources */,
 				31D371232C7659130090D6FB /* ExtDate.swift in Sources */,

@@ -113,8 +113,8 @@ struct ContentView: View {
             }
 
             .onAppear(perform: {
-                transactionCount = cvmInstance.cvmTransactionCount
-                accountCount = cvmInstance.cvmAccountCount
+                transactionCount = cvmInstance.cvmNewTrans.count
+                accountCount = cvmInstance.cvmNewAccount.count
             })
 //            .navigationTitle("Root view")
             Spacer()

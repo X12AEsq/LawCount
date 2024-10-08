@@ -18,10 +18,12 @@ struct LawCountView: View {
         HStack(alignment:.top) {
             Spacer()
             VStack(alignment: .leading) {
-                Text(cvmInstance.moduleTitle(mod: "Law Accounting"))
-                    .font(.system(size: 20))
-                    .padding(.leading, 20)
-                    .padding(.bottom, 20)
+                HStack {
+                    Text(cvmInstance.moduleTitle(mod: "Law Accounting"))
+                        .font(.system(size: 20))
+                }
+                .padding(.leading, 20)
+                .padding(.bottom, 20)
                 HStack {
                     Button {
                         print("above push")
@@ -29,7 +31,7 @@ struct LawCountView: View {
                         print("below push")
                     } label: {
                         Text(" Documents ")
-//                            .font(.system(size: 30))
+                        //                            .font(.system(size: 30))
                     }
                     .buttonStyle(CustomButton2())
                     Spacer()
@@ -40,7 +42,7 @@ struct LawCountView: View {
                     Button {
                         router.push(.Client)
                     } label: {
-                        Text(" Accounts: \(cvmInstance.accountCount()) ")
+                        Text(" Accounts: \(acctCount) ")
                         //                            .font(.system(size: 30))
                     }
                     .buttonStyle(CustomButton2())
@@ -48,20 +50,14 @@ struct LawCountView: View {
                 }
                 .padding(.leading, 20)
                 .padding(.bottom, 20)
-//                .onAppear() {
-//                    acctCount = cvmInstance.accountCount()
-//                }
                 HStack {
                     Button {
                         router.push(.Cause)
                     } label: {
-                        Text(" Transactions: \(cvmInstance.cvmTransactions.count) ")
+                        Text(" Transactions: \(transCount) ")
                             .font(.system(size: 20))
                     }
                     .buttonStyle(CustomButton2())
-//                    .onAppear() {
-//                        transCount = cvmInstance.cvmTransactions.count
-//                    }
                     Spacer()
                 }
                 .padding(.leading, 20)
@@ -82,10 +78,10 @@ struct LawCountView: View {
                 .padding(.bottom, 20)
             }
         }
-//        .onAppear() {
-//            acctCount = cvmInstance.accountCount()
-//            transCount = cvmInstance.cvmTransactions.count
-//        }
+        .onAppear() {
+            acctCount = cvmInstance.accountCount()
+            transCount = cvmInstance.cvmTransactions.count
+        }
     }
 }
 
